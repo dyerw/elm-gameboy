@@ -1,4 +1,4 @@
-module Binary exposing (Bit(..), Byte, zeroByte)
+module Binary exposing (Bit(..), BitIndex(..), Byte, zeroByte)
 
 
 type Bit
@@ -8,6 +8,17 @@ type Bit
 
 type alias Byte =
     ( Bit, Bit, Bit, Bit, Bit, Bit, Bit, Bit )
+
+
+type BitIndex
+    = Zero
+    | One
+    | Two
+    | Three
+    | Four
+    | Five
+    | Six
+    | Seven
 
 
 zeroByte : Byte

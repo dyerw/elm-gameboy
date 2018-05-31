@@ -1,6 +1,6 @@
 module CPU exposing (..)
 
-import Binary exposing (Bit(..), Byte, zeroByte)
+import Binary exposing (Bit(..), BitIndex(..), Byte, zeroByte)
 
 
 type EightBitRegisterName
@@ -17,6 +17,11 @@ type EightBitRegisterName
 type SixteenBitRegisterName
     = SP -- stack pointer
     | PC -- program counter
+
+
+type RegisterName
+    = EightBitRegisterName
+    | SixteenBitRegisterName
 
 
 type alias RegisterState =
@@ -93,10 +98,63 @@ type Flag
     | Carry
 
 
+type RegisterOperand
+    = Single RegisterName
+    | Double EightBitRegisterName EightBitRegisterName
+
+
 type Instruction
     = NOP
     | STOP
-    | JR Flag ( Byte, Byte )
+    | LDValue RegisterOperand Byte
+    | LDRegister RegisterOperand RegisterOperand
+    | LDD RegisterOperand RegisterOperand
+    | PUSH RegisterOperand
+    | POP RegisterOperand
+    | ADD RegisterOperand
+    | ADC RegisterOperand
+    | SUB RegisterOperand
+    | SBC RegisterOperand
+    | AND RegisterOperand
+    | OR RegisterOperand
+    | XOR RegisterOperand
+    | CP RegisterOperand
+    | INC RegisterOperand
+    | DEC RegisterOperand
+    | ADDSP Byte
+    | SWAP RegisterOperand
+    | DAA
+    | CPL
+    | CCF
+    | SCF
+    | HALT
+    | DI
+    | EI
+    | RLCA
+    | RLA
+    | RRCA
+    | RRA
+    | RLC RegisterOperand
+    | RL RegisterOperand
+    | RRC RegisterOperand
+    | RR RegisterOperand
+    | SLA RegisterOperand
+    | SRA RegisterOperand
+    | SRL RegisterOperand
+    | BIT BitIndex RegisterOperand
+    | SET BitIndex RegisterOperand
+    | RES BitIndex RegisterOperand
+    | JP Byte Byte
+    | JPFlag Flag Byte Byte
+    | JPHL
+    | JR Byte
+    | JRFlag Flag Byte
+    | CALL Byte Byte
+    | CALLFlag Flag Byte Byte
+    | RST Byte
+    | RET
+    | RETFlag Flag
+    | RETI
 
 
 execute : Instruction -> RegisterState -> RegisterState
