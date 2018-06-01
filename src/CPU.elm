@@ -1,6 +1,14 @@
 module CPU exposing (..)
 
-import Binary exposing (Bit(..), BitIndex(..), Byte, zeroByte)
+import Binary
+    exposing
+        ( Bit(..)
+        , BitIndex(..)
+        , Byte
+        , Word
+        , zeroByte
+        )
+import MMU exposing (..)
 
 
 type EightBitRegisterName
@@ -169,6 +177,40 @@ type Instruction
     | RETI
 
 
-execute : Instruction -> RegisterState -> RegisterState
-execute instruction registerState =
-    initialRegisterState
+
+-- TODO: Implement fetch
+
+
+type alias EmulatorState =
+    { mmu : MMU, registers : RegisterState }
+
+
+fetch : EmulatorState -> ( Binary.Word, EmulatorState )
+fetch emulatorState =
+    ( Binary.Word zeroByte zeroByte, emulatorState )
+
+
+
+-- TODO: Implement decode
+
+
+decode : Binary.Word -> Instruction
+decode word =
+    NOP
+
+
+
+-- TODO: Implement execute
+
+
+execute : ( Instruction, EmulatorState ) -> EmulatorState
+execute ( instruction, emulatorState ) =
+    emulatorState
+
+
+processInstructionCycle : EmulatorState -> EmulatorState
+processInstructionCycle emulatorState =
+    emulatorState
+        |> fetch
+        |> Tuple.mapFirst decode
+        |> execute
