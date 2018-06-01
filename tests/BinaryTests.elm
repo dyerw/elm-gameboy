@@ -15,7 +15,7 @@ byte : Fuzzer Byte
 byte =
     map2
         (\( bit1, bit2, bit3, bit4, bit5 ) ( bit6, bit7, bit8 ) ->
-            ( bit1, bit2, bit3, bit4, bit5, bit6, bit7, bit8 )
+            Byte bit1 bit2 bit3 bit4 bit5 bit6 bit7 bit8
         )
         (tuple5 ( bit, bit, bit, bit, bit ))
         (tuple3 ( bit, bit, bit ))
@@ -34,12 +34,12 @@ suite =
             , test "0 & 1 = 0" <|
                 \_ -> bitAnd O I |> Expect.equal O
             ]
-        , describe "Binary.toList && Binary.toTuple"
+        , describe "Binary.toList && Binary.toByte"
             [ fuzz byte "doing toList and toTuple should return the same original input" <|
                 \generatedByte ->
                     generatedByte
                         |> toList
-                        |> toTuple
+                        |> toByte
                         |> Expect.equal generatedByte
             ]
         , describe "Binary.byteAnd"

@@ -69,7 +69,11 @@ setEightBitRegister eightBitRegister byte registerState =
             { registerState | f = byte }
 
 
-setSixteenbitRegister : SixteenBitRegisterName -> ( Byte, Byte ) -> RegisterState -> RegisterState
+setSixteenbitRegister :
+    SixteenBitRegisterName
+    -> ( Byte, Byte )
+    -> RegisterState
+    -> RegisterState
 setSixteenbitRegister sixteenBitRegisterName ( byte1, byte2 ) registerState =
     case sixteenBitRegisterName of
         SP ->

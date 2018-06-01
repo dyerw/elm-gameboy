@@ -23,4 +23,4 @@ readByte mmu address =
 
 readWord : MMU -> Word -> Word
 readWord mmu address =
-    ( zeroByte, zeroByte )
+    Binary.Word zeroByte zeroByte
