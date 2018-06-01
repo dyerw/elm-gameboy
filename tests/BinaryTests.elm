@@ -24,10 +24,22 @@ byte =
 suite : Test
 suite =
     describe "the Binary module"
-        [ describe "bitAnd"
-            [ test "1 & 1 = 1" (\_ -> bitAnd I I |> Expect.equal I)
-            , test "1 & 0 = 0" (\_ -> bitAnd I O |> Expect.equal O)
-            , test "0 & 0 = 0" (\_ -> bitAnd O O |> Expect.equal O)
-            , test "0 & 1 = 0" (\_ -> bitAnd O I |> Expect.equal O)
+        [ describe "Binary.bitAnd"
+            [ test "1 & 1 = 1" <|
+                \_ -> bitAnd I I |> Expect.equal I
+            , test "1 & 0 = 0" <|
+                \_ -> bitAnd I O |> Expect.equal O
+            , test "0 & 0 = 0" <|
+                \_ -> bitAnd O O |> Expect.equal O
+            , test "0 & 1 = 0" <|
+                \_ -> bitAnd O I |> Expect.equal O
+            ]
+        , describe "Binary.toList && Binary.toTuple"
+            [ fuzz byte "doing toList and toTuple should return the same original input" <|
+                \generatedByte ->
+                    generatedByte
+                        |> toList
+                        |> toTuple
+                        |> Expect.equal generatedByte
             ]
         ]

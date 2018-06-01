@@ -1,4 +1,4 @@
-module Binary exposing (Bit(..), BitIndex(..), Byte, zeroByte, Word, bitAnd)
+module Binary exposing (..)
 
 
 type Bit
