@@ -51,43 +51,35 @@ toTuple bitList =
 
 
 bitAnd : Bit -> Bit -> Bit
-bitAnd bit bit2 =
-    case bit of
-        O ->
-            case bit2 of
-                O ->
-                    O
+bitAnd bit1 bit2 =
+    case ( bit1, bit2 ) of
+        ( O, O ) ->
+            O
 
-                I ->
-                    O
+        ( I, O ) ->
+            O
 
-        I ->
-            case bit2 of
-                O ->
-                    O
+        ( I, I ) ->
+            I
 
-                I ->
-                    I
+        ( O, I ) ->
+            O
 
 
 bitOr : Bit -> Bit -> Bit
-bitOr bit bit2 =
-    case bit of
-        O ->
-            case bit2 of
-                O ->
-                    O
+bitOr bit1 bit2 =
+    case ( bit1, bit2 ) of
+        ( O, O ) ->
+            O
 
-                I ->
-                    I
+        ( O, I ) ->
+            I
 
-        I ->
-            case bit2 of
-                O ->
-                    I
+        ( I, O ) ->
+            I
 
-                I ->
-                    I
+        ( I, I ) ->
+            I
 
 
 byteAnd : Byte -> Byte -> Byte
