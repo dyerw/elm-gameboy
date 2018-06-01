@@ -35,6 +35,63 @@ fullByte =
     Byte I I I I I I I I
 
 
+toHexStringNibble : ( Bit, Bit, Bit, Bit ) -> String
+toHexStringNibble nibble =
+    case nibble of
+        ( O, O, O, O ) ->
+            "0"
+
+        ( O, O, O, I ) ->
+            "1"
+
+        ( O, O, I, O ) ->
+            "2"
+
+        ( O, O, I, I ) ->
+            "3"
+
+        ( O, I, O, O ) ->
+            "4"
+
+        ( O, I, O, I ) ->
+            "5"
+
+        ( O, I, I, O ) ->
+            "6"
+
+        ( O, I, I, I ) ->
+            "7"
+
+        ( I, O, O, O ) ->
+            "8"
+
+        ( I, O, O, I ) ->
+            "9"
+
+        ( I, O, I, O ) ->
+            "A"
+
+        ( I, O, I, I ) ->
+            "B"
+
+        ( I, I, O, O ) ->
+            "C"
+
+        ( I, I, O, I ) ->
+            "D"
+
+        ( I, I, I, O ) ->
+            "E"
+
+        ( I, I, I, I ) ->
+            "F"
+
+
+toHexString : Byte -> String
+toHexString (Byte bit1 bit2 bit3 bit4 bit5 bit6 bit7 bit8) =
+    toHexStringNibble ( bit1, bit2, bit3, bit4 ) ++ toHexStringNibble ( bit5, bit6, bit7, bit8 )
+
+
 toList : Byte -> List Bit
 toList (Byte bit1 bit2 bit3 bit4 bit5 bit6 bit7 bit8) =
     [ bit1, bit2, bit3, bit4, bit5, bit6, bit7, bit8 ]

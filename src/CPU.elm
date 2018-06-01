@@ -74,6 +74,7 @@ setEightBitRegister eightBitRegister byte registerState =
             { registerState | l = byte }
 
         F ->
+            -- TODO: Mask away right 4 bits as they are never written
             { registerState | f = byte }
 
 
