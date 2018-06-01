@@ -17,6 +17,9 @@ type EightBitRegisterName
 type SixteenBitRegisterName
     = SP -- stack pointer
     | PC -- program counter
+    | BC -- BC thru HL are "virtual" 16-bit registers using two 8-bit registers
+    | DE
+    | HL
 
 
 type RegisterName
@@ -67,13 +70,22 @@ setEightBitRegister eightBitRegister byte registerState =
 
 
 setSixteenbitRegister : SixteenBitRegisterName -> ( Byte, Byte ) -> RegisterState -> RegisterState
-setSixteenbitRegister sixteenBitRegisterName bytes registerState =
+setSixteenbitRegister sixteenBitRegisterName ( byte1, byte2 ) registerState =
     case sixteenBitRegisterName of
         SP ->
-            { registerState | sp = bytes }
+            { registerState | sp = ( byte1, byte2 ) }
 
         PC ->
-            { registerState | pc = bytes }
+            { registerState | pc = ( byte1, byte2 ) }
+
+        BC ->
+            { registerState | b = byte1, c = byte2 }
+
+        DE ->
+            { registerState | d = byte1, e = byte2 }
+
+        HL ->
+            { registerState | h = byte1, l = byte2 }
 
 
 initialRegisterState : RegisterState
@@ -98,31 +110,27 @@ type Flag
     | Carry
 
 
-type RegisterOperand
-    = Single RegisterName
-    | Double EightBitRegisterName EightBitRegisterName
-
-
 type Instruction
     = NOP
     | STOP
-    | LDValue RegisterOperand Byte
-    | LDRegister RegisterOperand RegisterOperand
-    | LDD RegisterOperand RegisterOperand
-    | PUSH RegisterOperand
-    | POP RegisterOperand
-    | ADD RegisterOperand
-    | ADC RegisterOperand
-    | SUB RegisterOperand
-    | SBC RegisterOperand
-    | AND RegisterOperand
-    | OR RegisterOperand
-    | XOR RegisterOperand
-    | CP RegisterOperand
-    | INC RegisterOperand
-    | DEC RegisterOperand
+      -- FIXME: We need to handle 8-bit and 16-bit loads
+    | LDValue RegisterName Byte
+    | LDRegister RegisterName RegisterName
+    | LDD RegisterName RegisterName
+    | PUSH RegisterName
+    | POP RegisterName
+    | ADD RegisterName
+    | ADC RegisterName
+    | SUB RegisterName
+    | SBC RegisterName
+    | AND RegisterName
+    | OR RegisterName
+    | XOR RegisterName
+    | CP RegisterName
+    | INC RegisterName
+    | DEC RegisterName
     | ADDSP Byte
-    | SWAP RegisterOperand
+    | SWAP RegisterName
     | DAA
     | CPL
     | CCF
@@ -134,16 +142,16 @@ type Instruction
     | RLA
     | RRCA
     | RRA
-    | RLC RegisterOperand
-    | RL RegisterOperand
-    | RRC RegisterOperand
-    | RR RegisterOperand
-    | SLA RegisterOperand
-    | SRA RegisterOperand
-    | SRL RegisterOperand
-    | BIT BitIndex RegisterOperand
-    | SET BitIndex RegisterOperand
-    | RES BitIndex RegisterOperand
+    | RLC RegisterName
+    | RL RegisterName
+    | RRC RegisterName
+    | RR RegisterName
+    | SLA RegisterName
+    | SRA RegisterName
+    | SRL RegisterName
+    | BIT BitIndex RegisterName
+    | SET BitIndex RegisterName
+    | RES BitIndex RegisterName
     | JP Byte Byte
     | JPFlag Flag Byte Byte
     | JPHL
