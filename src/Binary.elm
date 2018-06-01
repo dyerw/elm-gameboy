@@ -1,4 +1,4 @@
-module Binary exposing (Bit(..), BitIndex(..), Byte, zeroByte, Word)
+module Binary exposing (Bit(..), BitIndex(..), Byte, zeroByte, Word, bitAnd)
 
 
 type Bit
@@ -54,7 +54,7 @@ bitAnd bit bit2 =
                     O
 
                 I ->
-                    I
+                    O
 
         I ->
             case bit2 of
