@@ -42,4 +42,28 @@ suite =
                         |> toTuple
                         |> Expect.equal generatedByte
             ]
+        , describe "Binary.byteAnd"
+            [ fuzz byte "and with a zeroByte should always be just the zeroByte" <|
+                \generatedByte ->
+                    generatedByte
+                        |> byteAnd zeroByte
+                        |> Expect.equal zeroByte
+            , fuzz byte "and with a fullByte should always just be the original byte" <|
+                \generatedByte ->
+                    generatedByte
+                        |> byteAnd fullByte
+                        |> Expect.equal generatedByte
+            ]
+        , describe "Binary.byteOr"
+            [ fuzz byte "or with a fullByte should always be a fullByte" <|
+                \generatedByte ->
+                    generatedByte
+                        |> byteOr fullByte
+                        |> Expect.equal fullByte
+            , fuzz byte "or with a zero byte should always be the original byte" <|
+                \generatedByte ->
+                    generatedByte
+                        |> byteOr zeroByte
+                        |> Expect.equal generatedByte
+            ]
         ]

@@ -30,6 +30,11 @@ zeroByte =
     ( O, O, O, O, O, O, O, O )
 
 
+fullByte : Byte
+fullByte =
+    ( I, I, I, I, I, I, I, I )
+
+
 toList : Byte -> List Bit
 toList ( bit1, bit2, bit3, bit4, bit5, bit6, bit7, bit8 ) =
     [ bit1, bit2, bit3, bit4, bit5, bit6, bit7, bit8 ]
