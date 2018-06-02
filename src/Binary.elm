@@ -1,5 +1,7 @@
 module Binary exposing (..)
 
+-- TODO: Break out Hex package
+
 
 type Bit
     = O -- Zero
@@ -12,6 +14,136 @@ type Byte
 
 type Word
     = Word Byte Byte
+
+
+type HexNibble
+    = H0
+    | H1
+    | H2
+    | H3
+    | H4
+    | H5
+    | H6
+    | H7
+    | H8
+    | H9
+    | HA
+    | HB
+    | HC
+    | HD
+    | HE
+    | HF
+
+
+type HexByte
+    = HexByte HexNibble HexNibble
+
+
+hexNibbleToString : HexNibble -> String
+hexNibbleToString hexNibble =
+    case hexNibble of
+        H0 ->
+            "0"
+
+        H1 ->
+            "1"
+
+        H2 ->
+            "2"
+
+        H3 ->
+            "3"
+
+        H4 ->
+            "4"
+
+        H5 ->
+            "5"
+
+        H6 ->
+            "6"
+
+        H7 ->
+            "7"
+
+        H8 ->
+            "8"
+
+        H9 ->
+            "9"
+
+        HA ->
+            "A"
+
+        HB ->
+            "B"
+
+        HC ->
+            "C"
+
+        HD ->
+            "D"
+
+        HE ->
+            "E"
+
+        HF ->
+            "F"
+
+
+stringToHexNibble : String -> Maybe HexNibble
+stringToHexNibble string =
+    case string of
+        "0" ->
+            Just H0
+
+        "1" ->
+            Just H1
+
+        "2" ->
+            Just H2
+
+        "3" ->
+            Just H3
+
+        "4" ->
+            Just H4
+
+        "5" ->
+            Just H5
+
+        "6" ->
+            Just H6
+
+        "7" ->
+            Just H7
+
+        "8" ->
+            Just H8
+
+        "9" ->
+            Just H9
+
+        "A" ->
+            Just HA
+
+        "B" ->
+            Just HB
+
+        "C" ->
+            Just HC
+
+        "D" ->
+            Just HD
+
+        "E" ->
+            Just HE
+
+        "F" ->
+            Just HF
+
+        _ ->
+            Nothing
 
 
 type BitIndex
@@ -35,61 +167,69 @@ fullByte =
     Byte I I I I I I I I
 
 
-toHexStringNibble : ( Bit, Bit, Bit, Bit ) -> String
-toHexStringNibble nibble =
+binaryNibbleToHexNibble : ( Bit, Bit, Bit, Bit ) -> HexNibble
+binaryNibbleToHexNibble nibble =
     case nibble of
         ( O, O, O, O ) ->
-            "0"
+            H0
 
         ( O, O, O, I ) ->
-            "1"
+            H1
 
         ( O, O, I, O ) ->
-            "2"
+            H2
 
         ( O, O, I, I ) ->
-            "3"
+            H3
 
         ( O, I, O, O ) ->
-            "4"
+            H4
 
         ( O, I, O, I ) ->
-            "5"
+            H5
 
         ( O, I, I, O ) ->
-            "6"
+            H6
 
         ( O, I, I, I ) ->
-            "7"
+            H7
 
         ( I, O, O, O ) ->
-            "8"
+            H8
 
         ( I, O, O, I ) ->
-            "9"
+            H9
 
         ( I, O, I, O ) ->
-            "A"
+            HA
 
         ( I, O, I, I ) ->
-            "B"
+            HB
 
         ( I, I, O, O ) ->
-            "C"
+            HC
 
         ( I, I, O, I ) ->
-            "D"
+            HD
 
         ( I, I, I, O ) ->
-            "E"
+            HE
 
         ( I, I, I, I ) ->
-            "F"
+            HF
 
 
-toHexString : Byte -> String
-toHexString (Byte bit1 bit2 bit3 bit4 bit5 bit6 bit7 bit8) =
-    toHexStringNibble ( bit1, bit2, bit3, bit4 ) ++ toHexStringNibble ( bit5, bit6, bit7, bit8 )
+binaryByteToHexByte : Byte -> HexByte
+binaryByteToHexByte (Byte bit1 bit2 bit3 bit4 bit5 bit6 bit7 bit8) =
+    HexByte (binaryNibbleToHexNibble ( bit1, bit2, bit3, bit4 )) (binaryNibbleToHexNibble ( bit5, bit6, bit7, bit8 ))
+
+
+byteToHexString : Byte -> String
+byteToHexString (Byte bit1 bit2 bit3 bit4 bit5 bit6 bit7 bit8) =
+    ( binaryNibbleToHexNibble ( bit1, bit2, bit3, bit4 ), binaryNibbleToHexNibble ( bit5, bit6, bit7, bit8 ) )
+        |> Tuple.mapFirst hexNibbleToString
+        |> Tuple.mapSecond hexNibbleToString
+        |> (\( nib1, nib2 ) -> nib1 ++ nib2)
 
 
 toList : Byte -> List Bit

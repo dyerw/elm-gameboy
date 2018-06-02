@@ -30,9 +30,10 @@ type SixteenBitRegisterName
     | HL
 
 
-type RegisterName
-    = EightBitRegisterName
-    | SixteenBitRegisterName
+type RegisterArgument
+    = RegArg8 EightBitRegisterName
+    | RegArg16 SixteenBitRegisterName
+    | Address SixteenBitRegisterName
 
 
 type alias RegisterState =
@@ -126,24 +127,24 @@ type Flag
 type Instruction
     = NOP
     | STOP
-      -- FIXME: We need to handle 8-bit and 16-bit loads
-    | LDValue RegisterName Byte
-    | LDRegister RegisterName RegisterName
-    | LDD RegisterName RegisterName
-    | PUSH RegisterName
-    | POP RegisterName
-    | ADD RegisterName
-    | ADC RegisterName
-    | SUB RegisterName
-    | SBC RegisterName
-    | AND RegisterName
-    | OR RegisterName
-    | XOR RegisterName
-    | CP RegisterName
-    | INC RegisterName
-    | DEC RegisterName
+    | LDEightBitValue RegisterArgument Byte
+    | LDSixteenBitValue RegisterArgument Byte Byte
+    | LDRegister RegisterArgument RegisterArgument
+    | LDD RegisterArgument RegisterArgument
+    | PUSH RegisterArgument
+    | POP RegisterArgument
+    | ADDHL RegisterArgument
+    | ADC RegisterArgument
+    | SUB RegisterArgument
+    | SBC RegisterArgument
+    | AND RegisterArgument
+    | OR RegisterArgument
+    | XOR RegisterArgument
+    | CP RegisterArgument
+    | INC RegisterArgument
+    | DEC RegisterArgument
     | ADDSP Byte
-    | SWAP RegisterName
+    | SWAP RegisterArgument
     | DAA
     | CPL
     | CCF
@@ -155,16 +156,16 @@ type Instruction
     | RLA
     | RRCA
     | RRA
-    | RLC RegisterName
-    | RL RegisterName
-    | RRC RegisterName
-    | RR RegisterName
-    | SLA RegisterName
-    | SRA RegisterName
-    | SRL RegisterName
-    | BIT BitIndex RegisterName
-    | SET BitIndex RegisterName
-    | RES BitIndex RegisterName
+    | RLC RegisterArgument
+    | RL RegisterArgument
+    | RRC RegisterArgument
+    | RR RegisterArgument
+    | SLA RegisterArgument
+    | SRA RegisterArgument
+    | SRL RegisterArgument
+    | BIT BitIndex RegisterArgument
+    | SET BitIndex RegisterArgument
+    | RES BitIndex RegisterArgument
     | JP Byte Byte
     | JPFlag Flag Byte Byte
     | JPHL

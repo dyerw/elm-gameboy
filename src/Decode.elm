@@ -1,7 +1,7 @@
 module Decode exposing (..)
 
-import CPU exposing (Instruction(..), RegisterName(..))
-import Binary exposing (Word, toHexString)
+import CPU exposing (Instruction(..), RegisterArgument(..))
+import Binary as B
 
 
 -- An op code can include just the op code or
@@ -9,22 +9,53 @@ import Binary exposing (Word, toHexString)
 
 
 type OpCode
-    = NullaryOpCode Byte
-    | OneByteOpCode Byte Byte
-    | TwoByteOpcode Byte Byte Byte
+    = NullaryOpCode B.Byte
+    | OneByteOpCode B.Byte B.Byte
+    | TwoByteOpcode B.Byte B.Byte B.Byte
 
 
 decode : OpCode -> Instruction
 decode opCode =
     case opCode of
         NullaryOpCode byte ->
-            case (toHexString byte) of
-                "00" ->
+            case (B.binaryByteToHexByte byte) of
+                B.HexByte B.H0 B.H0 ->
                     NOP
-                "02" ->
-                    LDRegister BC A
 
-       OneByteOpCode byte byte2 ->
+                B.HexByte B.H0 B.H2 ->
+                    LDRegister (Address CPU.BC) (RegArg8 CPU.A)
+
+                B.HexByte B.H0 B.H3 ->
+                    INC (RegArg16 CPU.BC)
+
+                B.HexByte B.H0 B.H4 ->
+                    INC (RegArg8 CPU.B)
+
+                B.HexByte B.H0 B.H5 ->
+                    DEC (RegArg8 CPU.B)
+
+                B.HexByte B.H0 B.H7 ->
+                    RLCA
+
+                B.HexByte B.H0 B.H9 ->
+                    ADDHL (RegArg16 CPU.BC)
+
+                B.HexByte B.H1 B.H9 ->
+                    ADDHL (RegArg16 CPU.DE)
+
+                B.HexByte B.H2 B.H9 ->
+                    ADDHL (RegArg16 CPU.HL)
+
+                B.HexByte B.H3 B.H9 ->
+                    ADDHL (RegArg16 CPU.SP)
+
+                B.HexByte B.H0 B.HA ->
+                    LDRegister (RegArg16 CPU.BC) (RegArg8 CPU.A)
+
+                _ ->
+                    NOP
+
+        OneByteOpCode byte byte2 ->
             NOP
 
         TwoByteOpcode byte byte2 byte3 ->
