@@ -124,10 +124,10 @@ initialRegisterState =
 
 
 type Flag
-    = NonZero
-    | Zero
-    | NonCarry
-    | Carry
+    = NonZeroFlag
+    | ZeroFlag
+    | NonCarryFlag
+    | CarryFlag
 
 
 type Instruction

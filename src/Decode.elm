@@ -686,6 +686,37 @@ decode opCode =
                     -- CP A
                     CP (RegArg8 CPU.C)
 
+                ---- RET ----
+                -- 0xC0
+                B.HexByte B.HC B.H0 ->
+                    -- RET NZ
+                    RETFlag CPU.NonZeroFlag
+
+                -- 0xD1
+                B.HexByte B.HD B.H1 ->
+                    -- RET NC
+                    RETFlag CPU.NonCarryFlag
+
+                -- 0xC8
+                B.HexByte B.HC B.H8 ->
+                    -- RET Z
+                    RETFlag CPU.ZeroFlag
+
+                -- 0xD8
+                B.HexByte B.HD B.H8 ->
+                    -- RET C
+                    RETFlag CPU.CarryFlag
+
+                -- 0xC9
+                B.HexByte B.HC B.H9 ->
+                    -- RET
+                    RET
+
+                -- 0xD9
+                B.HexByte B.HD B.H9 ->
+                    -- RETI
+                    RETI
+
                 ---- INC ----
                 -- 0x03
                 B.HexByte B.H0 B.H3 ->
