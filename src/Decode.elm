@@ -360,6 +360,87 @@ decode opCode =
                     -- LD A, A
                     LDRegister (RegArg8 CPU.A) (RegArg8 CPU.A)
 
+                ---- ADD ----
+                -- 0x80
+                B.HexByte B.H8 B.H0 ->
+                    -- ADD A, B
+                    ADD (RegArg8 CPU.B)
+
+                -- 0x81
+                B.HexByte B.H8 B.H1 ->
+                    -- ADD A, C
+                    ADD (RegArg8 CPU.C)
+
+                -- 0x82
+                B.HexByte B.H8 B.H2 ->
+                    -- ADD A, D
+                    ADD (RegArg8 CPU.D)
+
+                -- 0x83
+                B.HexByte B.H8 B.H3 ->
+                    -- ADD A, E
+                    ADD (RegArg8 CPU.E)
+
+                -- 0x84
+                B.HexByte B.H8 B.H4 ->
+                    -- ADD A, H
+                    ADD (RegArg8 CPU.H)
+
+                -- 0x85
+                B.HexByte B.H8 B.H5 ->
+                    -- ADD A, L
+                    ADD (RegArg8 CPU.L)
+
+                -- 0x86
+                B.HexByte B.H8 B.H6 ->
+                    -- ADD A, (HL)
+                    ADD (Address16 CPU.HL)
+
+                -- 0x87
+                B.HexByte B.H8 B.H7 ->
+                    -- ADD A, A
+                    ADD (RegArg8 CPU.A)
+
+                -- 0x88
+                B.HexByte B.H8 B.H8 ->
+                    -- ADC A, B
+                    ADC (RegArg8 CPU.B)
+
+                -- 0x89
+                B.HexByte B.H8 B.H9 ->
+                    -- ADC A, C
+                    ADC (RegArg8 CPU.C)
+
+                -- 0x8A
+                B.HexByte B.H8 B.HA ->
+                    -- ADC A, D
+                    ADC (RegArg8 CPU.D)
+
+                -- 0x8B
+                B.HexByte B.H8 B.HB ->
+                    -- ADC A, E
+                    ADC (RegArg8 CPU.E)
+
+                -- 0x8C
+                B.HexByte B.H8 B.HC ->
+                    -- ADC A, H
+                    ADC (RegArg8 CPU.H)
+
+                -- 0x8D
+                B.HexByte B.H8 B.HD ->
+                    -- ADC A, L
+                    ADC (RegArg8 CPU.L)
+
+                -- 0x8E
+                B.HexByte B.H8 B.HE ->
+                    -- ADC A, (HL)
+                    ADC (Address16 CPU.HL)
+
+                -- 0x8F
+                B.HexByte B.H8 B.HF ->
+                    -- ADC A, A
+                    ADC (RegArg8 CPU.C)
+
                 ---- INC ----
                 -- 0x03
                 B.HexByte B.H0 B.H3 ->

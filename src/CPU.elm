@@ -147,6 +147,7 @@ type Instruction
     | PUSH RegisterArgument
     | POP RegisterArgument
     | ADDHL RegisterArgument
+    | ADD RegisterArgument
     | ADC RegisterArgument
     | SUB RegisterArgument
     | SBC RegisterArgument
