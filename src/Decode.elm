@@ -2308,5 +2308,62 @@ decode opCode =
                     -- LD (a16), SP
                     LDHRegisterToImmediateAddress (ImmediateAddress16 byte2 byte3) (RegArg16 CPU.SP)
 
+                -- 0xEA
+                B.HexByte B.HE B.HA ->
+                    -- LD (a16), A
+                    LDHRegisterToImmediateAddress (ImmediateAddress16 byte2 byte3) (RegArg8 CPU.A)
+
+                -- 0xFA
+                B.HexByte B.HF B.HA ->
+                    -- LD A, (a16)
+                    LDHImmediateAddressToRegister (RegArg8 CPU.A) (ImmediateAddress16 byte2 byte3)
+
+                ---- JP ----
+                -- 0xC2
+                B.HexByte B.HC B.H2 ->
+                    -- JP NZ, a16
+                    JPFlag CPU.NonZeroFlag byte2 byte3
+
+                -- 0xD3
+                B.HexByte B.HD B.H2 ->
+                    -- JP NC, a16
+                    JPFlag CPU.NonCarryFlag byte2 byte3
+
+                -- 0xC3
+                B.HexByte B.HC B.H3 ->
+                    -- JP a16
+                    JP byte2 byte3
+
+                -- 0xCA
+                B.HexByte B.HC B.HA ->
+                    -- JP Z, a16
+                    JPFlag CPU.ZeroFlag byte2 byte3
+
+                -- 0xDA
+                B.HexByte B.HD B.HA ->
+                    -- JP C, a16
+                    JPFlag CPU.CarryFlag byte2 byte3
+
+                ---- CALL ----
+                -- 0xC4
+                B.HexByte B.HC B.H4 ->
+                    -- CALL NZ, a16
+                    CALLFlag CPU.NonZeroFlag byte2 byte3
+
+                -- 0xD4
+                B.HexByte B.HD B.H4 ->
+                    -- CALL NC, a16
+                    CALLFlag CPU.NonCarryFlag byte2 byte3
+
+                -- 0xCC
+                B.HexByte B.HC B.HC ->
+                    -- CALL Z, a16
+                    CALLFlag CPU.ZeroFlag byte2 byte3
+
+                -- 0xDC
+                B.HexByte B.HD B.HC ->
+                    -- CALL C, a16
+                    CALLFlag CPU.CarryFlag byte2 byte3
+
                 _ ->
                     NOP
