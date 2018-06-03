@@ -33,7 +33,13 @@ type SixteenBitRegisterName
 type RegisterArgument
     = RegArg8 EightBitRegisterName
     | RegArg16 SixteenBitRegisterName
-    | Address SixteenBitRegisterName
+    | Address8 EightBitRegisterName
+    | Address16 SixteenBitRegisterName
+
+
+type ImmediateAddress
+    = ImmediateAddress8 Byte
+    | ImmediateAddress16 Byte Byte
 
 
 type alias RegisterState =
@@ -130,7 +136,10 @@ type Instruction
     | LDEightBitValue RegisterArgument Byte
     | LDSixteenBitValue RegisterArgument Byte Byte
     | LDRegister RegisterArgument RegisterArgument
+    | LDHRegisterToImmediateAddress ImmediateAddress RegisterArgument
+    | LDHImmediateAddressToRegister RegisterArgument ImmediateAddress
     | LDD RegisterArgument RegisterArgument
+    | LDI RegisterArgument RegisterArgument
     | PUSH RegisterArgument
     | POP RegisterArgument
     | ADDHL RegisterArgument
