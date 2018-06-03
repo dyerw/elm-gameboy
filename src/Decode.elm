@@ -717,6 +717,48 @@ decode opCode =
                     -- RETI
                     RETI
 
+                ---- POP ----
+                -- 0xC1
+                B.HexByte B.HC B.H1 ->
+                    -- POP BC
+                    POP (RegArg16 CPU.BC)
+
+                -- 0xD1
+                B.HexByte B.HD B.H1 ->
+                    -- POP DE
+                    POP (RegArg16 CPU.DE)
+
+                -- 0xE1
+                B.HexByte B.HE B.H1 ->
+                    -- POP HL
+                    POP (RegArg16 CPU.HL)
+
+                -- 0xF1
+                B.HexByte B.HF B.H1 ->
+                    -- POP AF
+                    POP (RegArg16 CPU.AF)
+
+                ---- PUSH ----
+                -- 0xC5
+                B.HexByte B.HC B.H5 ->
+                    -- PUSH BC
+                    PUSH (RegArg16 CPU.BC)
+
+                -- 0xD5
+                B.HexByte B.HD B.H5 ->
+                    -- PUSH DE
+                    PUSH (RegArg16 CPU.DE)
+
+                -- 0xE5
+                B.HexByte B.HE B.H5 ->
+                    -- PUSH HL
+                    PUSH (RegArg16 CPU.HL)
+
+                -- 0xF5
+                B.HexByte B.HF B.H5 ->
+                    -- PUSH AF
+                    PUSH (RegArg16 CPU.AF)
+
                 ---- INC ----
                 -- 0x03
                 B.HexByte B.H0 B.H3 ->
