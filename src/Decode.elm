@@ -25,8 +25,6 @@ decode opCode =
                 B.HexByte B.H0 B.H2 ->
                     LDRegister (Address16 CPU.BC) (RegArg8 CPU.A)
 
-<<<<<<< HEAD
-=======
                 -- 0x12
                 B.HexByte B.H1 B.H2 ->
                     -- LD (DE), A
@@ -284,7 +282,6 @@ decode opCode =
 
                 ---- INC ----
                 -- 0x03
->>>>>>> 0b1bfed354742f85f044a048609561628318dfa5
                 B.HexByte B.H0 B.H3 ->
                     INC (RegArg16 CPU.BC)
 
