@@ -210,6 +210,86 @@ decode opCode =
                     -- LD E, A
                     LDRegister (RegArg8 CPU.E) (RegArg8 CPU.A)
 
+                -- 0x60
+                B.HexByte B.H6 B.H0 ->
+                    -- LD H, B
+                    LDRegister (RegArg8 CPU.H) (RegArg8 CPU.B)
+
+                -- 0x61
+                B.HexByte B.H6 B.H1 ->
+                    -- LD H, C
+                    LDRegister (RegArg8 CPU.H) (RegArg8 CPU.C)
+
+                -- 0x62
+                B.HexByte B.H6 B.H2 ->
+                    -- LD H, D
+                    LDRegister (RegArg8 CPU.H) (RegArg8 CPU.D)
+
+                -- 0x63
+                B.HexByte B.H6 B.H3 ->
+                    -- LD H, E
+                    LDRegister (RegArg8 CPU.H) (RegArg8 CPU.E)
+
+                -- 0x64
+                B.HexByte B.H6 B.H4 ->
+                    -- LD H, H
+                    LDRegister (RegArg8 CPU.H) (RegArg8 CPU.H)
+
+                -- 0x65
+                B.HexByte B.H6 B.H5 ->
+                    -- LD H, L
+                    LDRegister (RegArg8 CPU.H) (RegArg8 CPU.L)
+
+                -- 0x66
+                B.HexByte B.H6 B.H6 ->
+                    -- LD H, (HL)
+                    LDRegister (RegArg8 CPU.H) (Address16 CPU.HL)
+
+                -- 0x67
+                B.HexByte B.H6 B.H7 ->
+                    -- LD H, A
+                    LDRegister (RegArg8 CPU.H) (RegArg8 CPU.A)
+
+                -- 0x68
+                B.HexByte B.H6 B.H8 ->
+                    -- LD L, B
+                    LDRegister (RegArg8 CPU.L) (RegArg8 CPU.B)
+
+                -- 0x69
+                B.HexByte B.H6 B.H9 ->
+                    -- LD L, C
+                    LDRegister (RegArg8 CPU.L) (RegArg8 CPU.C)
+
+                -- 0x6A
+                B.HexByte B.H6 B.HA ->
+                    -- LD L, D
+                    LDRegister (RegArg8 CPU.L) (RegArg8 CPU.D)
+
+                -- 0x6B
+                B.HexByte B.H6 B.HB ->
+                    -- LD L, E
+                    LDRegister (RegArg8 CPU.L) (RegArg8 CPU.E)
+
+                -- 0x6C
+                B.HexByte B.H6 B.HC ->
+                    -- LD L, H
+                    LDRegister (RegArg8 CPU.L) (RegArg8 CPU.H)
+
+                -- 0x6D
+                B.HexByte B.H6 B.HD ->
+                    -- LD L, L
+                    LDRegister (RegArg8 CPU.L) (RegArg8 CPU.L)
+
+                -- 0x6E
+                B.HexByte B.H6 B.HE ->
+                    -- LD L, (HL)
+                    LDRegister (RegArg8 CPU.L) (Address16 CPU.HL)
+
+                -- 0x6F
+                B.HexByte B.H6 B.HF ->
+                    -- LD L, A
+                    LDRegister (RegArg8 CPU.L) (RegArg8 CPU.A)
+
                 ---- INC ----
                 -- 0x03
                 B.HexByte B.H0 B.H3 ->
