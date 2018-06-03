@@ -522,6 +522,88 @@ decode opCode =
                     -- SBC A, A
                     SBC (RegArg8 CPU.C)
 
+                ---- SUB ----
+                -- 0xA0
+                B.HexByte B.HA B.H0 ->
+                    -- AND B
+                    AND (RegArg8 CPU.B)
+
+                -- 0xA1
+                B.HexByte B.HA B.H1 ->
+                    -- AND C
+                    AND (RegArg8 CPU.C)
+
+                -- 0xA2
+                B.HexByte B.HA B.H2 ->
+                    -- AND D
+                    AND (RegArg8 CPU.D)
+
+                -- 0xA3
+                B.HexByte B.HA B.H3 ->
+                    -- AND E
+                    AND (RegArg8 CPU.E)
+
+                -- 0xA4
+                B.HexByte B.HA B.H4 ->
+                    -- AND H
+                    AND (RegArg8 CPU.H)
+
+                -- 0xA5
+                B.HexByte B.HA B.H5 ->
+                    -- AND L
+                    AND (RegArg8 CPU.L)
+
+                -- 0xA6
+                B.HexByte B.HA B.H6 ->
+                    -- AND (HL)
+                    AND (Address16 CPU.HL)
+
+                -- 0xA7
+                B.HexByte B.HA B.H7 ->
+                    -- AND A
+                    XOR (RegArg8 CPU.A)
+
+                ---- XOR ----
+                -- 0xA8
+                B.HexByte B.HA B.H8 ->
+                    -- XOR B
+                    XOR (RegArg8 CPU.B)
+
+                -- 0xA9
+                B.HexByte B.HA B.H9 ->
+                    -- XOR C
+                    XOR (RegArg8 CPU.C)
+
+                -- 0xAA
+                B.HexByte B.HA B.HA ->
+                    -- XOR D
+                    XOR (RegArg8 CPU.D)
+
+                -- 0xAB
+                B.HexByte B.HA B.HB ->
+                    -- XOR E
+                    XOR (RegArg8 CPU.E)
+
+                -- 0xAC
+                B.HexByte B.HA B.HC ->
+                    -- XOR H
+                    XOR (RegArg8 CPU.H)
+
+                -- 0xAD
+                B.HexByte B.HA B.HD ->
+                    -- XOR L
+                    XOR (RegArg8 CPU.L)
+
+                -- 0xAE
+                B.HexByte B.HA B.HE ->
+                    -- XOR (HL)
+                    XOR (Address16 CPU.HL)
+
+                -- 0xAF
+                B.HexByte B.HA B.HF ->
+                    -- XOR A
+                    XOR (RegArg8 CPU.C)
+
                 ---- INC ----
                 -- 0x03
                 B.HexByte B.H0 B.H3 ->
