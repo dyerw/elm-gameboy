@@ -470,261 +470,339 @@ decode opCode =
                         ---- RL ----
                         -- 0x10
                         B.HexByte B.H1 B.H0 ->
-                            NOP
+                            -- RL B
+                            RL (RegArg8 CPU.B)
 
                         B.HexByte B.H1 B.H1 ->
-                            NOP
+                            -- RL C
+                            RL (RegArg8 CPU.C)
 
                         -- 0x12
                         B.HexByte B.H1 B.H2 ->
-                            NOP
+                            -- RL D
+                            RL (RegArg8 CPU.D)
 
                         -- 0x13
                         B.HexByte B.H1 B.H3 ->
-                            NOP
+                            -- RL D
+                            RL (RegArg8 CPU.E)
 
                         -- 0x14
                         B.HexByte B.H1 B.H4 ->
-                            NOP
+                            -- RL H
+                            RL (RegArg8 CPU.H)
 
                         -- 0x15
                         B.HexByte B.H1 B.H5 ->
-                            NOP
+                            -- RL L
+                            RL (RegArg8 CPU.L)
 
                         -- 0x16
                         B.HexByte B.H1 B.H6 ->
-                            NOP
+                            -- RL (HL)
+                            RL (Address16 CPU.HL)
 
                         -- 0x17
                         B.HexByte B.H1 B.H7 ->
-                            NOP
+                            -- RL A
+                            RL (RegArg8 CPU.A)
 
                         ---- RR ----
                         -- 0x18
                         B.HexByte B.H1 B.H8 ->
-                            NOP
+                            -- RL A
+                            RR (RegArg8 CPU.B)
 
                         -- 0x19
                         B.HexByte B.H1 B.H9 ->
-                            NOP
+                            -- RL C
+                            RR (RegArg8 CPU.C)
 
                         -- 0x1A
                         B.HexByte B.H1 B.HA ->
-                            NOP
+                            -- RL D
+                            RR (RegArg8 CPU.D)
 
                         -- 0x1B
                         B.HexByte B.H1 B.HB ->
-                            NOP
+                            -- RL E
+                            RR (RegArg8 CPU.E)
 
                         -- 0x1C
                         B.HexByte B.H1 B.HC ->
-                            NOP
+                            -- RL H
+                            RR (RegArg8 CPU.H)
 
                         -- 0x1D
                         B.HexByte B.H1 B.HD ->
-                            NOP
+                            -- RL L
+                            RR (RegArg8 CPU.L)
 
                         -- 0x1E
                         B.HexByte B.H1 B.HE ->
-                            NOP
+                            -- RL (HL)
+                            RR (Address16 CPU.HL)
 
                         -- 0x1F
                         B.HexByte B.H1 B.HF ->
-                            NOP
+                            -- RL L
+                            RR (RegArg8 CPU.A)
 
                         -- 0x20
                         B.HexByte B.H2 B.H0 ->
-                            NOP
+                            -- SLA B
+                            SLA (RegArg8 CPU.B)
 
                         -- 0x21
                         B.HexByte B.H2 B.H1 ->
-                            NOP
+                            -- SLA C
+                            SLA (RegArg8 CPU.C)
 
                         -- 0x22
                         B.HexByte B.H2 B.H2 ->
-                            NOP
+                            -- SLA D
+                            SLA (RegArg8 CPU.D)
 
                         -- 0x23
                         B.HexByte B.H2 B.H3 ->
-                            NOP
+                            -- SLA E
+                            SLA (RegArg8 CPU.E)
 
                         -- 0x24
                         B.HexByte B.H2 B.H4 ->
-                            NOP
+                            -- SLA H
+                            SLA (RegArg8 CPU.H)
 
                         -- 0x25
                         B.HexByte B.H2 B.H5 ->
-                            NOP
+                            -- SLA L
+                            SLA (RegArg8 CPU.L)
 
                         -- 0x26
                         B.HexByte B.H2 B.H6 ->
-                            NOP
+                            -- SLA (HL)
+                            SLA (Address16 CPU.HL)
 
                         -- 0x27
                         B.HexByte B.H2 B.H7 ->
-                            NOP
+                            -- SLA A
+                            SLA (RegArg8 CPU.A)
 
                         -- 0x28
                         B.HexByte B.H2 B.H8 ->
-                            NOP
+                            -- SRA B
+                            SRA (RegArg8 CPU.B)
 
                         -- 0x29
                         B.HexByte B.H2 B.H9 ->
-                            NOP
+                            -- SRA C
+                            SRA (RegArg8 CPU.C)
 
                         -- 0x2A
                         B.HexByte B.H2 B.HA ->
-                            NOP
+                            -- SRA D
+                            SRA (RegArg8 CPU.D)
 
                         -- 0x2B
                         B.HexByte B.H2 B.HB ->
-                            NOP
+                            -- SRA E
+                            SRA (RegArg8 CPU.E)
 
                         -- 0x2C
                         B.HexByte B.H2 B.HC ->
-                            NOP
+                            -- SRA H
+                            SRA (RegArg8 CPU.H)
 
                         -- 0x2D
                         B.HexByte B.H2 B.HD ->
-                            NOP
+                            -- SRA L
+                            SRA (RegArg8 CPU.L)
 
                         -- 0x2E
                         B.HexByte B.H2 B.HE ->
-                            NOP
+                            -- SRA (HL)
+                            SRA (Address16 CPU.HL)
 
                         -- 0x2F
                         B.HexByte B.H2 B.HF ->
-                            NOP
+                            -- SRA A
+                            SRA (RegArg8 CPU.A)
 
                         -- 0x30
                         B.HexByte B.H3 B.H0 ->
-                            NOP
+                            -- SWAP B
+                            SWAP (RegArg8 CPU.B)
 
                         -- 0x31
                         B.HexByte B.H3 B.H1 ->
-                            NOP
+                            -- SWAP C
+                            SWAP (RegArg8 CPU.C)
 
                         -- 0x32
                         B.HexByte B.H3 B.H2 ->
-                            NOP
+                            -- SWAP D
+                            SWAP (RegArg8 CPU.D)
 
                         -- 0x33
                         B.HexByte B.H3 B.H3 ->
-                            NOP
+                            -- SWAP E
+                            SWAP (RegArg8 CPU.E)
 
                         -- 0x34
                         B.HexByte B.H3 B.H4 ->
-                            NOP
+                            -- SWAP H
+                            SWAP (RegArg8 CPU.H)
 
                         -- 0x35
                         B.HexByte B.H3 B.H5 ->
-                            NOP
+                            -- SWAP L
+                            SWAP (RegArg8 CPU.L)
 
                         -- 0x36
                         B.HexByte B.H3 B.H6 ->
-                            NOP
+                            -- SWAP (HL)
+                            SWAP (Address16 CPU.HL)
 
                         -- 0x37
                         B.HexByte B.H3 B.H7 ->
-                            NOP
+                            -- SWAP A
+                            SWAP (RegArg8 CPU.A)
 
                         ---- SRL ----
                         -- 0x38
                         B.HexByte B.H3 B.H8 ->
-                            NOP
+                            -- SRL B
+                            SRL (RegArg8 CPU.B)
 
                         -- 0x39
                         B.HexByte B.H3 B.H9 ->
-                            NOP
+                            -- SRL C
+                            SRL (RegArg8 CPU.C)
 
                         -- 0x3A
                         B.HexByte B.H3 B.HA ->
-                            NOP
+                            -- SRL D
+                            SRL (RegArg8 CPU.D)
 
                         -- 0x3B
                         B.HexByte B.H3 B.HB ->
-                            NOP
+                            -- SRL E
+                            SRL (RegArg8 CPU.E)
 
                         -- 0x3C
                         B.HexByte B.H3 B.HC ->
-                            NOP
+                            -- SRL H
+                            SRL (RegArg8 CPU.H)
 
                         -- 0x3D
                         B.HexByte B.H3 B.HD ->
-                            NOP
+                            -- SRL L
+                            SRL (RegArg8 CPU.L)
 
                         -- 0x3E
                         B.HexByte B.H3 B.HE ->
-                            NOP
+                            -- SRL (HL)
+                            SRL (Address16 CPU.HL)
 
                         -- 0x3F
                         B.HexByte B.H3 B.HF ->
-                            NOP
+                            -- SRL A
+                            SRL (RegArg8 CPU.A)
 
                         ---- BIT ----
                         -- 0x40
                         B.HexByte B.H4 B.H0 ->
-                            NOP
+                            -- BIT B
+                            BIT B.ZeroIndex (RegArg8 CPU.B)
 
                         -- 0x41
                         B.HexByte B.H4 B.H1 ->
-                            NOP
+                            -- BIT C
+                            BIT B.ZeroIndex
+                                (RegArg8 CPU.C)
 
                         -- 0x42
                         B.HexByte B.H4 B.H2 ->
-                            NOP
+                            -- BIT D
+                            BIT B.ZeroIndex
+                                (RegArg8 CPU.D)
 
                         -- 0x43
                         B.HexByte B.H4 B.H3 ->
-                            NOP
+                            -- BIT E
+                            BIT B.ZeroIndex
+                                (RegArg8 CPU.E)
 
                         -- 0x44
                         B.HexByte B.H4 B.H4 ->
-                            NOP
+                            -- BIT H
+                            BIT B.ZeroIndex
+                                (RegArg8 CPU.H)
 
                         -- 0x45
                         B.HexByte B.H4 B.H5 ->
-                            NOP
+                            -- BIT L
+                            BIT B.ZeroIndex
+                                (RegArg8 CPU.L)
 
                         -- 0x46
                         B.HexByte B.H4 B.H6 ->
-                            NOP
+                            -- BIT (HL)
+                            BIT B.ZeroIndex (Address16 CPU.HL)
 
                         -- 0x47
                         B.HexByte B.H4 B.H7 ->
-                            NOP
+                            -- BIT A
+                            BIT B.ZeroIndex
+                                (RegArg8 CPU.A)
 
                         -- 0x48
                         B.HexByte B.H4 B.H8 ->
-                            NOP
+                            -- BIT B
+                            BIT B.OneIndex
+                                (RegArg8 CPU.B)
 
                         -- 0x49
                         B.HexByte B.H4 B.H9 ->
-                            NOP
+                            -- BIT C
+                            BIT B.OneIndex
+                                (RegArg8 CPU.C)
 
                         -- 0x4A
                         B.HexByte B.H4 B.HA ->
-                            NOP
+                            -- BIT D
+                            BIT B.OneIndex
+                                (RegArg8 CPU.D)
 
                         -- 0x4B
                         B.HexByte B.H4 B.HB ->
-                            NOP
+                            -- BIT E
+                            BIT B.OneIndex
+                                (RegArg8 CPU.E)
 
                         -- 0x4C
                         B.HexByte B.H4 B.HC ->
-                            NOP
+                            -- BIT H
+                            BIT B.OneIndex
+                                (RegArg8 CPU.H)
 
                         -- 0x4D
                         B.HexByte B.H4 B.HD ->
-                            NOP
+                            -- BIT L
+                            BIT B.OneIndex
+                                (RegArg8 CPU.L)
 
                         -- 0x4E
                         B.HexByte B.H4 B.HE ->
-                            NOP
+                            -- BIT (HL)
+                            BIT B.OneIndex
+                                (Address16 CPU.HL)
 
                         -- 0x4F
                         B.HexByte B.H4 B.HF ->
-                            NOP
+                            -- BIT A
+                            BIT B.OneIndex
+                                (RegArg8 CPU.A)
 
                         -- 0x50
                         B.HexByte B.H5 B.H0 ->

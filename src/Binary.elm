@@ -151,14 +151,14 @@ stringToHexNibble string =
 
 
 type BitIndex
-    = Zero
-    | One
-    | Two
-    | Three
-    | Four
-    | Five
-    | Six
-    | Seven
+    = ZeroIndex
+    | OneIndex
+    | TwoIndex
+    | ThreeIndex
+    | FourIndex
+    | FiveIndex
+    | SixIndex
+    | SevenIndex
 
 
 zeroByte : Byte
@@ -301,26 +301,26 @@ bitMask bitIndex byte =
 mask : BitIndex -> Byte
 mask bitIndex =
     case bitIndex of
-        Zero ->
+        ZeroIndex ->
             Byte O O O O O O O O
 
-        One ->
+        OneIndex ->
             Byte O O O O O O O I
 
-        Two ->
+        TwoIndex ->
             Byte O O O O O O I I
 
-        Three ->
+        ThreeIndex ->
             Byte O O O O O I I I
 
-        Four ->
+        FourIndex ->
             Byte O O O O I I I I
 
-        Five ->
+        FiveIndex ->
             Byte O O O I I I I I
 
-        Six ->
+        SixIndex ->
             Byte O O I I I I I I
 
-        Seven ->
+        SevenIndex ->
             Byte O I I I I I I I
