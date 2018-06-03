@@ -37,6 +37,11 @@ type RegisterArgument
     | Address16 SixteenBitRegisterName
 
 
+type ImmediateAddress
+    = ImmediateAddress8 Byte
+    | ImmediateAddress16 Byte Byte
+
+
 type alias RegisterState =
     { a : Byte
     , b : Byte
@@ -135,9 +140,9 @@ type Instruction
     | LDSixteenBitValue RegisterArgument Byte Byte
       -- Load from one register to another
     | LDRegister RegisterArgument RegisterArgument
-      -- Load and decrement
+    | LDHRegisterToImmediateAddress ImmediateAddress RegisterArgument
+    | LDHImmediateAddressToRegister RegisterArgument ImmediateAddress
     | LDD RegisterArgument RegisterArgument
-      -- Load and increment
     | LDI RegisterArgument RegisterArgument
     | PUSH RegisterArgument
     | POP RegisterArgument
