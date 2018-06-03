@@ -1413,516 +1413,756 @@ decode opCode =
                         ---- RES ----
                         -- 0x80
                         B.HexByte B.H8 B.H0 ->
-                            NOP
+                            -- RES 0 B
+                            RES B.ZeroIndex (RegArg8 CPU.B)
 
                         -- 0x81
                         B.HexByte B.H8 B.H1 ->
-                            NOP
+                            -- RES 0 C
+                            RES B.ZeroIndex
+                                (RegArg8 CPU.C)
 
                         -- 0x82
                         B.HexByte B.H8 B.H2 ->
-                            NOP
+                            -- RES 0 D
+                            RES B.ZeroIndex
+                                (RegArg8 CPU.D)
 
                         -- 0x83
                         B.HexByte B.H8 B.H3 ->
-                            NOP
+                            -- RES 0 E
+                            RES B.ZeroIndex
+                                (RegArg8 CPU.E)
 
                         -- 0x84
                         B.HexByte B.H8 B.H4 ->
-                            NOP
+                            -- RES 0 H
+                            RES B.ZeroIndex
+                                (RegArg8 CPU.H)
 
                         -- 0x85
                         B.HexByte B.H8 B.H5 ->
-                            NOP
+                            -- RES 0 L
+                            RES B.ZeroIndex
+                                (RegArg8 CPU.L)
 
                         -- 0x86
                         B.HexByte B.H8 B.H6 ->
-                            NOP
+                            -- RES 0 (HL)
+                            RES B.ZeroIndex (Address16 CPU.HL)
 
                         -- 0x87
                         B.HexByte B.H8 B.H7 ->
-                            NOP
+                            -- RES 0 A
+                            RES B.ZeroIndex
+                                (RegArg8 CPU.A)
 
                         -- 0x88
                         B.HexByte B.H8 B.H8 ->
-                            NOP
+                            -- RES 1 B
+                            RES B.OneIndex
+                                (RegArg8 CPU.B)
 
                         -- 0x89
                         B.HexByte B.H8 B.H9 ->
-                            NOP
+                            -- RES 1 C
+                            RES B.OneIndex
+                                (RegArg8 CPU.C)
 
                         -- 0x8A
                         B.HexByte B.H8 B.HA ->
-                            NOP
+                            -- RES 1 D
+                            RES B.OneIndex
+                                (RegArg8 CPU.D)
 
                         -- 0x8B
                         B.HexByte B.H8 B.HB ->
-                            NOP
+                            -- RES 1 E
+                            RES B.OneIndex
+                                (RegArg8 CPU.E)
 
                         -- 0x8C
                         B.HexByte B.H8 B.HC ->
-                            NOP
+                            -- RES 1 H
+                            RES B.OneIndex
+                                (RegArg8 CPU.H)
 
                         -- 0x8D
                         B.HexByte B.H8 B.HD ->
-                            NOP
+                            -- RES 1 L
+                            RES B.OneIndex
+                                (RegArg8 CPU.L)
 
                         -- 0x8E
                         B.HexByte B.H8 B.HE ->
-                            NOP
+                            -- RES 1 (HL)
+                            RES B.OneIndex
+                                (Address16 CPU.HL)
 
                         -- 0x8F
                         B.HexByte B.H8 B.HF ->
-                            NOP
+                            -- RES 1 A
+                            RES B.OneIndex
+                                (RegArg8 CPU.A)
 
                         -- 0x90
                         B.HexByte B.H9 B.H0 ->
-                            NOP
+                            -- RES 2 B
+                            RES B.TwoIndex (RegArg8 CPU.B)
 
                         -- 0x91
                         B.HexByte B.H9 B.H1 ->
-                            NOP
+                            -- RES 2 C
+                            RES B.TwoIndex
+                                (RegArg8 CPU.C)
 
                         -- 0x92
                         B.HexByte B.H9 B.H2 ->
-                            NOP
+                            -- RES 2 D
+                            RES B.TwoIndex
+                                (RegArg8 CPU.D)
 
                         -- 0x93
                         B.HexByte B.H9 B.H3 ->
-                            NOP
+                            -- RES 2 E
+                            RES B.TwoIndex
+                                (RegArg8 CPU.E)
 
                         -- 0x94
                         B.HexByte B.H9 B.H4 ->
-                            NOP
+                            -- RES 2 H
+                            RES B.TwoIndex
+                                (RegArg8 CPU.H)
 
                         -- 0x95
                         B.HexByte B.H9 B.H5 ->
-                            NOP
+                            -- RES 2 L
+                            RES B.TwoIndex
+                                (RegArg8 CPU.L)
 
                         -- 0x96
                         B.HexByte B.H9 B.H6 ->
-                            NOP
+                            -- RES 2 (HL)
+                            RES B.TwoIndex (Address16 CPU.HL)
 
                         -- 0x97
                         B.HexByte B.H9 B.H7 ->
-                            NOP
+                            -- RES 2 A
+                            RES B.TwoIndex
+                                (RegArg8 CPU.A)
 
                         -- 0x98
                         B.HexByte B.H9 B.H8 ->
-                            NOP
+                            -- RES 3 B
+                            RES B.ThreeIndex
+                                (RegArg8 CPU.B)
 
                         -- 0x99
                         B.HexByte B.H9 B.H9 ->
-                            NOP
+                            -- RES 3 C
+                            RES B.ThreeIndex
+                                (RegArg8 CPU.C)
 
                         -- 0x9A
                         B.HexByte B.H9 B.HA ->
-                            NOP
+                            -- RES 3 D
+                            RES B.ThreeIndex
+                                (RegArg8 CPU.D)
 
                         -- 0x9B
                         B.HexByte B.H9 B.HB ->
-                            NOP
+                            -- RES 3 E
+                            RES B.ThreeIndex
+                                (RegArg8 CPU.E)
 
                         -- 0x9C
                         B.HexByte B.H9 B.HC ->
-                            NOP
+                            -- RES 3 H
+                            RES B.ThreeIndex
+                                (RegArg8 CPU.H)
 
                         -- 0x9D
                         B.HexByte B.H9 B.HD ->
-                            NOP
+                            -- RES 3 L
+                            RES B.ThreeIndex
+                                (RegArg8 CPU.L)
 
                         -- 0x9E
                         B.HexByte B.H9 B.HE ->
-                            NOP
+                            -- RES 3 (HL)
+                            RES B.ThreeIndex
+                                (Address16 CPU.HL)
 
                         -- 0x9F
                         B.HexByte B.H9 B.HF ->
-                            NOP
+                            -- RES 3 A
+                            RES B.ThreeIndex
+                                (RegArg8 CPU.A)
 
                         -- 0xA0
                         B.HexByte B.HA B.H0 ->
-                            NOP
+                            -- RES 4 B
+                            RES B.FourIndex (RegArg8 CPU.B)
 
                         -- 0xA1
                         B.HexByte B.HA B.H1 ->
-                            NOP
+                            -- RES 4 C
+                            RES B.FourIndex
+                                (RegArg8 CPU.C)
 
                         -- 0xA2
                         B.HexByte B.HA B.H2 ->
-                            NOP
+                            -- RES 4 D
+                            RES B.FourIndex
+                                (RegArg8 CPU.D)
 
                         -- 0xA3
                         B.HexByte B.HA B.H3 ->
-                            NOP
+                            -- RES 4 E
+                            RES B.FourIndex
+                                (RegArg8 CPU.E)
 
                         -- 0xA4
                         B.HexByte B.HA B.H4 ->
-                            NOP
+                            -- RES 4 H
+                            RES B.FourIndex
+                                (RegArg8 CPU.H)
 
                         -- 0xA5
                         B.HexByte B.HA B.H5 ->
-                            NOP
+                            -- RES 4 L
+                            RES B.FourIndex
+                                (RegArg8 CPU.L)
 
                         -- 0xA6
                         B.HexByte B.HA B.H6 ->
-                            NOP
+                            -- RES 4 (HL)
+                            RES B.FourIndex (Address16 CPU.HL)
 
                         -- 0xA7
                         B.HexByte B.HA B.H7 ->
-                            NOP
+                            -- RES 4 A
+                            RES B.FourIndex
+                                (RegArg8 CPU.A)
 
                         -- 0xA8
                         B.HexByte B.HA B.H8 ->
-                            NOP
+                            -- RES 5 B
+                            RES B.FiveIndex
+                                (RegArg8 CPU.B)
 
                         -- 0xA9
                         B.HexByte B.HA B.H9 ->
-                            NOP
+                            -- RES 5 C
+                            RES B.FiveIndex
+                                (RegArg8 CPU.C)
 
                         -- 0xAA
                         B.HexByte B.HA B.HA ->
-                            NOP
+                            -- RES 5 D
+                            RES B.FiveIndex
+                                (RegArg8 CPU.D)
 
                         -- 0xAB
                         B.HexByte B.HA B.HB ->
-                            NOP
+                            -- RES 5 E
+                            RES B.FiveIndex
+                                (RegArg8 CPU.E)
 
                         -- 0xAC
                         B.HexByte B.HA B.HC ->
-                            NOP
+                            -- RES 5 H
+                            RES B.FiveIndex
+                                (RegArg8 CPU.H)
 
                         -- 0xAD
                         B.HexByte B.HA B.HD ->
-                            NOP
+                            -- RES 5 L
+                            RES B.FiveIndex
+                                (RegArg8 CPU.L)
 
                         -- 0xAE
                         B.HexByte B.HA B.HE ->
-                            NOP
+                            -- RES 5 (HL)
+                            RES B.FiveIndex
+                                (Address16 CPU.HL)
 
                         -- 0xAF
                         B.HexByte B.HA B.HF ->
-                            NOP
+                            -- RES 5 A
+                            RES B.FiveIndex
+                                (RegArg8 CPU.A)
 
                         -- 0xB0
                         B.HexByte B.HB B.H0 ->
-                            NOP
+                            -- RES 6 B
+                            RES B.SixIndex (RegArg8 CPU.B)
 
                         -- 0xB1
                         B.HexByte B.HB B.H1 ->
-                            NOP
+                            -- RES 6 C
+                            RES B.SixIndex
+                                (RegArg8 CPU.C)
 
                         -- 0xB2
                         B.HexByte B.HB B.H2 ->
-                            NOP
+                            -- RES 6 D
+                            RES B.SixIndex
+                                (RegArg8 CPU.D)
 
                         -- 0xB3
                         B.HexByte B.HB B.H3 ->
-                            NOP
+                            -- RES 6 E
+                            RES B.SixIndex
+                                (RegArg8 CPU.E)
 
                         -- 0xB4
                         B.HexByte B.HB B.H4 ->
-                            NOP
+                            -- RES 6 H
+                            RES B.SixIndex
+                                (RegArg8 CPU.H)
 
                         -- 0xB5
                         B.HexByte B.HB B.H5 ->
-                            NOP
+                            -- RES 6 L
+                            RES B.SixIndex
+                                (RegArg8 CPU.L)
 
                         -- 0xB6
                         B.HexByte B.HB B.H6 ->
-                            NOP
+                            -- RES 6 (HL)
+                            RES B.SixIndex (Address16 CPU.HL)
 
                         -- 0xB7
                         B.HexByte B.HB B.H7 ->
-                            NOP
+                            -- RES 6 A
+                            RES B.SixIndex
+                                (RegArg8 CPU.A)
 
                         -- 0xB8
                         B.HexByte B.HB B.H8 ->
-                            NOP
+                            -- RES 7 B
+                            RES B.SevenIndex
+                                (RegArg8 CPU.B)
 
                         -- 0xB9
                         B.HexByte B.HB B.H9 ->
-                            NOP
+                            -- RES 7 C
+                            RES B.SevenIndex
+                                (RegArg8 CPU.C)
 
                         -- 0xBA
                         B.HexByte B.HB B.HA ->
-                            NOP
+                            -- RES 7 D
+                            RES B.SevenIndex
+                                (RegArg8 CPU.D)
 
                         -- 0xBB
                         B.HexByte B.HB B.HB ->
-                            NOP
+                            -- RES 7 E
+                            RES B.SevenIndex
+                                (RegArg8 CPU.E)
 
                         -- 0xBC
                         B.HexByte B.HB B.HC ->
-                            NOP
+                            -- RES 7 H
+                            RES B.SevenIndex
+                                (RegArg8 CPU.H)
 
                         -- 0xBD
                         B.HexByte B.HB B.HD ->
-                            NOP
+                            -- RES 7 L
+                            RES B.SevenIndex
+                                (RegArg8 CPU.L)
 
                         -- 0xBE
                         B.HexByte B.HB B.HE ->
-                            NOP
+                            -- RES 7 (HL)
+                            RES B.SevenIndex
+                                (Address16 CPU.HL)
 
                         -- 0xBF
                         B.HexByte B.HB B.HF ->
-                            NOP
+                            -- RES 7 A
+                            RES B.SevenIndex
+                                (RegArg8 CPU.A)
 
                         ---- SET ----
                         -- 0xC0
                         B.HexByte B.HC B.H0 ->
-                            NOP
+                            -- SET 0 B
+                            SET B.ZeroIndex (RegArg8 CPU.B)
 
                         -- 0xC1
                         B.HexByte B.HC B.H1 ->
-                            NOP
+                            -- SET 0 C
+                            SET B.ZeroIndex
+                                (RegArg8 CPU.C)
 
                         -- 0xC2
                         B.HexByte B.HC B.H2 ->
-                            NOP
+                            -- SET 0 D
+                            SET B.ZeroIndex
+                                (RegArg8 CPU.D)
 
                         -- 0xC3
                         B.HexByte B.HC B.H3 ->
-                            NOP
+                            -- SET 0 E
+                            SET B.ZeroIndex
+                                (RegArg8 CPU.E)
 
                         -- 0xC4
                         B.HexByte B.HC B.H4 ->
-                            NOP
+                            -- SET 0 H
+                            SET B.ZeroIndex
+                                (RegArg8 CPU.H)
 
                         -- 0xC5
                         B.HexByte B.HC B.H5 ->
-                            NOP
+                            -- SET 0 L
+                            SET B.ZeroIndex
+                                (RegArg8 CPU.L)
 
                         -- 0xC6
                         B.HexByte B.HC B.H6 ->
-                            NOP
+                            -- SET 0 (HL)
+                            SET B.ZeroIndex (Address16 CPU.HL)
 
                         -- 0xC7
                         B.HexByte B.HC B.H7 ->
-                            NOP
+                            -- SET 0 A
+                            SET B.ZeroIndex
+                                (RegArg8 CPU.A)
 
                         -- 0xC8
                         B.HexByte B.HC B.H8 ->
-                            NOP
+                            -- SET 1 B
+                            SET B.OneIndex
+                                (RegArg8 CPU.B)
 
                         -- 0xC9
                         B.HexByte B.HC B.H9 ->
-                            NOP
+                            -- SET 1 C
+                            SET B.OneIndex
+                                (RegArg8 CPU.C)
 
                         -- 0xCA
                         B.HexByte B.HC B.HA ->
-                            NOP
+                            -- SET 1 D
+                            SET B.OneIndex
+                                (RegArg8 CPU.D)
 
                         -- 0xCB
                         B.HexByte B.HC B.HB ->
-                            NOP
+                            -- SET 1 E
+                            SET B.OneIndex
+                                (RegArg8 CPU.E)
 
                         -- 0xCC
                         B.HexByte B.HC B.HC ->
-                            NOP
+                            -- SET 1 H
+                            SET B.OneIndex
+                                (RegArg8 CPU.H)
 
                         -- 0xCD
                         B.HexByte B.HC B.HD ->
-                            NOP
+                            -- SET 1 L
+                            SET B.OneIndex
+                                (RegArg8 CPU.L)
 
                         -- 0xCE
                         B.HexByte B.HC B.HE ->
-                            NOP
+                            -- SET 1 (HL)
+                            SET B.OneIndex
+                                (Address16 CPU.HL)
 
                         -- 0xCF
                         B.HexByte B.HC B.HF ->
-                            NOP
+                            -- SET 1 A
+                            SET B.OneIndex
+                                (RegArg8 CPU.A)
 
                         -- 0xD0
                         B.HexByte B.HD B.H0 ->
-                            NOP
+                            -- SET 2 B
+                            SET B.TwoIndex (RegArg8 CPU.B)
 
                         -- 0xD1
                         B.HexByte B.HD B.H1 ->
-                            NOP
+                            -- SET 2 C
+                            SET B.TwoIndex
+                                (RegArg8 CPU.C)
 
                         -- 0xD2
                         B.HexByte B.HD B.H2 ->
-                            NOP
+                            -- SET 2 D
+                            SET B.TwoIndex
+                                (RegArg8 CPU.D)
 
                         -- 0xD3
                         B.HexByte B.HD B.H3 ->
-                            NOP
+                            -- SET 2 E
+                            SET B.TwoIndex
+                                (RegArg8 CPU.E)
 
                         -- 0xD4
                         B.HexByte B.HD B.H4 ->
-                            NOP
+                            -- SET 2 H
+                            SET B.TwoIndex
+                                (RegArg8 CPU.H)
 
                         -- 0xD5
                         B.HexByte B.HD B.H5 ->
-                            NOP
+                            -- SET 2 L
+                            SET B.TwoIndex
+                                (RegArg8 CPU.L)
 
                         -- 0xD6
                         B.HexByte B.HD B.H6 ->
-                            NOP
+                            -- SET 2 (HL)
+                            SET B.TwoIndex (Address16 CPU.HL)
 
                         -- 0xD7
                         B.HexByte B.HD B.H7 ->
-                            NOP
+                            -- SET 2 A
+                            SET B.TwoIndex
+                                (RegArg8 CPU.A)
 
                         -- 0xD8
                         B.HexByte B.HD B.H8 ->
-                            NOP
+                            -- SET 3 B
+                            SET B.ThreeIndex
+                                (RegArg8 CPU.B)
 
                         -- 0xD9
                         B.HexByte B.HD B.H9 ->
-                            NOP
+                            -- SET 3 C
+                            SET B.ThreeIndex
+                                (RegArg8 CPU.C)
 
                         -- 0xDA
                         B.HexByte B.HD B.HA ->
-                            NOP
+                            -- SET 3 D
+                            SET B.ThreeIndex
+                                (RegArg8 CPU.D)
 
                         -- 0xDB
                         B.HexByte B.HD B.HB ->
-                            NOP
+                            -- SET 3 E
+                            SET B.ThreeIndex
+                                (RegArg8 CPU.E)
 
                         -- 0xDC
                         B.HexByte B.HD B.HC ->
-                            NOP
+                            -- SET 3 H
+                            SET B.ThreeIndex
+                                (RegArg8 CPU.H)
 
                         -- 0xDD
                         B.HexByte B.HD B.HD ->
-                            NOP
+                            -- SET 3 L
+                            SET B.ThreeIndex
+                                (RegArg8 CPU.L)
 
                         -- 0xDE
                         B.HexByte B.HD B.HE ->
-                            NOP
+                            -- SET 3 (HL)
+                            SET B.ThreeIndex
+                                (Address16 CPU.HL)
 
                         -- 0xDF
                         B.HexByte B.HD B.HF ->
-                            NOP
+                            -- SET 3 A
+                            SET B.ThreeIndex
+                                (RegArg8 CPU.A)
 
                         -- 0xE0
                         B.HexByte B.HE B.H0 ->
-                            NOP
+                            -- SET 4 B
+                            SET B.FourIndex (RegArg8 CPU.B)
 
                         -- 0xE1
                         B.HexByte B.HE B.H1 ->
-                            NOP
+                            -- SET 4 C
+                            SET B.FourIndex
+                                (RegArg8 CPU.C)
 
                         -- 0xE2
                         B.HexByte B.HE B.H2 ->
-                            NOP
+                            -- SET 4 D
+                            SET B.FourIndex
+                                (RegArg8 CPU.D)
 
                         -- 0xE3
                         B.HexByte B.HE B.H3 ->
-                            NOP
+                            -- SET 4 E
+                            SET B.FourIndex
+                                (RegArg8 CPU.E)
 
                         -- 0xE4
                         B.HexByte B.HE B.H4 ->
-                            NOP
+                            -- SET 4 H
+                            SET B.FourIndex
+                                (RegArg8 CPU.H)
 
                         -- 0xE5
                         B.HexByte B.HE B.H5 ->
-                            NOP
+                            -- SET 4 L
+                            SET B.FourIndex
+                                (RegArg8 CPU.L)
 
                         -- 0xE6
                         B.HexByte B.HE B.H6 ->
-                            NOP
+                            -- SET 4 (HL)
+                            SET B.FourIndex (Address16 CPU.HL)
 
                         -- 0xE7
                         B.HexByte B.HE B.H7 ->
-                            NOP
+                            -- SET 4 A
+                            SET B.FourIndex
+                                (RegArg8 CPU.A)
 
                         -- 0xE8
                         B.HexByte B.HE B.H8 ->
-                            NOP
+                            -- SET 5 B
+                            SET B.FiveIndex
+                                (RegArg8 CPU.B)
 
                         -- 0xE9
                         B.HexByte B.HE B.H9 ->
-                            NOP
+                            -- SET 5 C
+                            SET B.FiveIndex
+                                (RegArg8 CPU.C)
 
                         -- 0xEA
                         B.HexByte B.HE B.HA ->
-                            NOP
+                            -- SET 5 D
+                            SET B.FiveIndex
+                                (RegArg8 CPU.D)
 
                         -- 0xEB
                         B.HexByte B.HE B.HB ->
-                            NOP
+                            -- SET 5 E
+                            SET B.FiveIndex
+                                (RegArg8 CPU.E)
 
                         -- 0xEC
                         B.HexByte B.HE B.HC ->
-                            NOP
+                            -- SET 5 H
+                            SET B.FiveIndex
+                                (RegArg8 CPU.H)
 
                         -- 0xED
                         B.HexByte B.HE B.HD ->
-                            NOP
+                            -- SET 5 L
+                            SET B.FiveIndex
+                                (RegArg8 CPU.L)
 
                         -- 0xEE
                         B.HexByte B.HE B.HE ->
-                            NOP
+                            -- SET 5 (HL)
+                            SET B.FiveIndex
+                                (Address16 CPU.HL)
 
                         -- 0xEF
                         B.HexByte B.HE B.HF ->
-                            NOP
+                            -- SET 5 A
+                            SET B.FiveIndex
+                                (RegArg8 CPU.A)
 
                         -- 0xF0
                         B.HexByte B.HF B.H0 ->
-                            NOP
+                            -- SET 6 B
+                            SET B.SixIndex (RegArg8 CPU.B)
 
                         -- 0xF1
                         B.HexByte B.HF B.H1 ->
-                            NOP
+                            -- SET 6 C
+                            SET B.SixIndex
+                                (RegArg8 CPU.C)
 
                         -- 0xF2
                         B.HexByte B.HF B.H2 ->
-                            NOP
+                            -- SET 6 D
+                            SET B.SixIndex
+                                (RegArg8 CPU.D)
 
                         -- 0xF3
                         B.HexByte B.HF B.H3 ->
-                            NOP
+                            -- SET 6 E
+                            SET B.SixIndex
+                                (RegArg8 CPU.E)
 
                         -- 0xF4
                         B.HexByte B.HF B.H4 ->
-                            NOP
+                            -- SET 6 H
+                            SET B.SixIndex
+                                (RegArg8 CPU.H)
 
                         -- 0xF5
                         B.HexByte B.HF B.H5 ->
-                            NOP
+                            -- SET 6 L
+                            SET B.SixIndex
+                                (RegArg8 CPU.L)
 
                         -- 0xF6
                         B.HexByte B.HF B.H6 ->
-                            NOP
+                            -- RES 6 (HL)
+                            RES B.SixIndex (Address16 CPU.HL)
 
                         -- 0xF7
                         B.HexByte B.HF B.H7 ->
-                            NOP
+                            -- RES 6 A
+                            RES B.SixIndex
+                                (RegArg8 CPU.A)
 
                         -- 0xF8
                         B.HexByte B.HF B.H8 ->
-                            NOP
+                            -- RES 7 B
+                            RES B.SevenIndex
+                                (RegArg8 CPU.B)
 
                         -- 0xF9
                         B.HexByte B.HF B.H9 ->
-                            NOP
+                            -- RES 7 C
+                            RES B.SevenIndex
+                                (RegArg8 CPU.C)
 
                         -- 0xFA
                         B.HexByte B.HF B.HA ->
-                            NOP
+                            -- RES 7 D
+                            RES B.SevenIndex
+                                (RegArg8 CPU.D)
 
                         -- 0xFB
                         B.HexByte B.HF B.HB ->
-                            NOP
+                            -- RES 7 E
+                            RES B.SevenIndex
+                                (RegArg8 CPU.E)
 
                         -- 0xFC
                         B.HexByte B.HF B.HC ->
-                            NOP
+                            -- RES 7 H
+                            RES B.SevenIndex
+                                (RegArg8 CPU.H)
 
                         -- 0xFD
                         B.HexByte B.HF B.HD ->
-                            NOP
+                            -- RES 7 L
+                            RES B.SevenIndex
+                                (RegArg8 CPU.L)
 
                         -- 0xFE
                         B.HexByte B.HF B.HE ->
-                            NOP
+                            -- RES 7 (HL)
+                            RES B.SevenIndex
+                                (Address16 CPU.HL)
 
                         -- 0xFF
                         B.HexByte B.HF B.HF ->
-                            NOP
+                            -- RES 7 A
+                            RES B.SevenIndex
+                                (RegArg8 CPU.A)
 
                 _ ->
                     NOP
