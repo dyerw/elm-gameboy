@@ -132,9 +132,13 @@ type Flag
 
 type Instruction
     = NOP
+      -- Stop CPU and LCD until button interupt
     | STOP
+      -- Load eight bit immediate value into register
     | LDEightBitValue RegisterArgument Byte
+      -- Load sixteen bit immediate value into register
     | LDSixteenBitValue RegisterArgument Byte Byte
+      -- Load from one register to another
     | LDRegister RegisterArgument RegisterArgument
     | LDHRegisterToImmediateAddress ImmediateAddress RegisterArgument
     | LDHImmediateAddressToRegister RegisterArgument ImmediateAddress
