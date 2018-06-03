@@ -1,58 +1,65 @@
-module Main exposing (..)
+module Main exposing (main)
 
-import Html exposing (Html, text, div, h1, img)
-import Html.Attributes exposing (src)
-import CPU
-import MMU
+import Browser
+import Html exposing (..)
+import Html.Events exposing (onClick)
 import Decode
 
 
----- MODEL ----
+-- MAIN
+
+
+main : Program () Model Msg
+main =
+    Browser.sandbox
+        { init = init
+        , update = update
+        , view = view
+        }
+
+
+
+-- MODEL
 
 
 type alias Model =
-    {}
+    { count : Int
+    }
 
 
-init : ( Model, Cmd Msg )
+init : Model
 init =
-    ( {}, Cmd.none )
+    { count = 0
+    }
 
 
 
----- UPDATE ----
+-- UPDATE
 
 
 type Msg
-    = NoOp
+    = Increment
+    | Decrement
 
 
-update : Msg -> Model -> ( Model, Cmd Msg )
+update : Msg -> Model -> Model
 update msg model =
-    ( model, Cmd.none )
+    case msg of
+        Increment ->
+            { model | count = model.count + 1 }
+
+        Decrement ->
+            { model | count = model.count - 1 }
 
 
 
----- VIEW ----
+-- VIEW
 
 
 view : Model -> Html Msg
 view model =
     div []
-        [ img [ src "/logo.svg" ] []
-        , h1 [] [ text "Gameboy more like Shameboy :(" ]
+        [ button [ onClick Decrement ] [ text "-" ]
+        , div [] [ text (String.fromInt model.count) ]
+        , button [ onClick Increment ] [ text "+" ]
         ]
-
-
-
----- PROGRAM ----
-
-
-main : Program Never Model Msg
-main =
-    Html.program
-        { view = view
-        , init = init
-        , update = update
-        , subscriptions = always Sub.none
-        }

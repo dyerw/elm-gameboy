@@ -8,6 +8,10 @@ type Bit
     | I -- One
 
 
+type Nibble
+    = Nibble Bit Bit Bit Bit
+
+
 type Byte
     = Byte Bit Bit Bit Bit Bit Bit Bit Bit
 
@@ -167,66 +171,66 @@ fullByte =
     Byte I I I I I I I I
 
 
-binaryNibbleToHexNibble : ( Bit, Bit, Bit, Bit ) -> HexNibble
+binaryNibbleToHexNibble : Nibble -> HexNibble
 binaryNibbleToHexNibble nibble =
     case nibble of
-        ( O, O, O, O ) ->
+        Nibble O O O O ->
             H0
 
-        ( O, O, O, I ) ->
+        Nibble O O O I ->
             H1
 
-        ( O, O, I, O ) ->
+        Nibble O O I O ->
             H2
 
-        ( O, O, I, I ) ->
+        Nibble O O I I ->
             H3
 
-        ( O, I, O, O ) ->
+        Nibble O I O O ->
             H4
 
-        ( O, I, O, I ) ->
+        Nibble O I O I ->
             H5
 
-        ( O, I, I, O ) ->
+        Nibble O I I O ->
             H6
 
-        ( O, I, I, I ) ->
+        Nibble O I I I ->
             H7
 
-        ( I, O, O, O ) ->
+        Nibble I O O O ->
             H8
 
-        ( I, O, O, I ) ->
+        Nibble I O O I ->
             H9
 
-        ( I, O, I, O ) ->
+        Nibble I O I O ->
             HA
 
-        ( I, O, I, I ) ->
+        Nibble I O I I ->
             HB
 
-        ( I, I, O, O ) ->
+        Nibble I I O O ->
             HC
 
-        ( I, I, O, I ) ->
+        Nibble I I O I ->
             HD
 
-        ( I, I, I, O ) ->
+        Nibble I I I O ->
             HE
 
-        ( I, I, I, I ) ->
+        Nibble I I I I ->
             HF
 
 
 binaryByteToHexByte : Byte -> HexByte
 binaryByteToHexByte (Byte bit1 bit2 bit3 bit4 bit5 bit6 bit7 bit8) =
-    HexByte (binaryNibbleToHexNibble ( bit1, bit2, bit3, bit4 )) (binaryNibbleToHexNibble ( bit5, bit6, bit7, bit8 ))
+    HexByte (binaryNibbleToHexNibble (Nibble bit1 bit2 bit3 bit4)) (binaryNibbleToHexNibble (Nibble bit5 bit6 bit7 bit8))
 
 
 byteToHexString : Byte -> String
 byteToHexString (Byte bit1 bit2 bit3 bit4 bit5 bit6 bit7 bit8) =
-    ( binaryNibbleToHexNibble ( bit1, bit2, bit3, bit4 ), binaryNibbleToHexNibble ( bit5, bit6, bit7, bit8 ) )
+    ( binaryNibbleToHexNibble (Nibble bit1 bit2 bit3 bit4), binaryNibbleToHexNibble (Nibble bit5 bit6 bit7 bit8) )
         |> Tuple.mapFirst hexNibbleToString
         |> Tuple.mapSecond hexNibbleToString
         |> (\( nib1, nib2 ) -> nib1 ++ nib2)

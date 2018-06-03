@@ -3,7 +3,7 @@ module Decode exposing (..)
 import CPU
     exposing
         ( Instruction(..)
-        , RegisterArgument(RegArg8, RegArg16, Address8, Address16)
+        , RegisterArgument(..)
         , ImmediateAddress(..)
         )
 import Binary as B
