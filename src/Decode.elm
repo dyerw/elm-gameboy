@@ -561,7 +561,7 @@ decode opCode =
                 -- 0xA7
                 B.HexByte B.HA B.H7 ->
                     -- AND A
-                    XOR (RegArg8 CPU.A)
+                    AND (RegArg8 CPU.A)
 
                 ---- XOR ----
                 -- 0xA8
@@ -603,6 +603,119 @@ decode opCode =
                 B.HexByte B.HA B.HF ->
                     -- XOR A
                     XOR (RegArg8 CPU.C)
+
+                ---- SUB ----
+                -- 0xB0
+                B.HexByte B.HB B.H0 ->
+                    -- OR B
+                    OR (RegArg8 CPU.B)
+
+                -- 0xB1
+                B.HexByte B.HB B.H1 ->
+                    -- OR C
+                    OR (RegArg8 CPU.C)
+
+                -- 0xB2
+                B.HexByte B.HB B.H2 ->
+                    -- OR D
+                    OR (RegArg8 CPU.D)
+
+                -- 0xB3
+                B.HexByte B.HB B.H3 ->
+                    -- OR E
+                    OR (RegArg8 CPU.E)
+
+                -- 0xB4
+                B.HexByte B.HB B.H4 ->
+                    -- OR H
+                    OR (RegArg8 CPU.H)
+
+                -- 0xB5
+                B.HexByte B.HB B.H5 ->
+                    -- OR L
+                    OR (RegArg8 CPU.L)
+
+                -- 0xB6
+                B.HexByte B.HB B.H6 ->
+                    -- OR (HL)
+                    OR (Address16 CPU.HL)
+
+                -- 0xB7
+                B.HexByte B.HB B.H7 ->
+                    -- OR A
+                    OR (RegArg8 CPU.A)
+
+                ---- CP ----
+                -- 0xB8
+                B.HexByte B.HB B.H8 ->
+                    -- CP B
+                    CP (RegArg8 CPU.B)
+
+                -- 0xB9
+                B.HexByte B.HB B.H9 ->
+                    -- CP C
+                    CP (RegArg8 CPU.C)
+
+                -- 0xBA
+                B.HexByte B.HB B.HA ->
+                    -- CP D
+                    CP (RegArg8 CPU.D)
+
+                -- 0xBB
+                B.HexByte B.HB B.HB ->
+                    -- CP E
+                    CP (RegArg8 CPU.E)
+
+                -- 0xBC
+                B.HexByte B.HB B.HC ->
+                    -- CP H
+                    CP (RegArg8 CPU.H)
+
+                -- 0xBD
+                B.HexByte B.HB B.HD ->
+                    -- CP L
+                    CP (RegArg8 CPU.L)
+
+                -- 0xBE
+                B.HexByte B.HB B.HE ->
+                    -- CP (HL)
+                    CP (Address16 CPU.HL)
+
+                -- 0xBF
+                B.HexByte B.HB B.HF ->
+                    -- CP A
+                    CP (RegArg8 CPU.C)
+
+                ---- RET ----
+                -- 0xC0
+                B.HexByte B.HC B.H0 ->
+                    -- RET NZ
+                    RETFlag CPU.NonZeroFlag
+
+                -- 0xD1
+                B.HexByte B.HD B.H1 ->
+                    -- RET NC
+                    RETFlag CPU.NonCarryFlag
+
+                -- 0xC8
+                B.HexByte B.HC B.H8 ->
+                    -- RET Z
+                    RETFlag CPU.ZeroFlag
+
+                -- 0xD8
+                B.HexByte B.HD B.H8 ->
+                    -- RET C
+                    RETFlag CPU.CarryFlag
+
+                -- 0xC9
+                B.HexByte B.HC B.H9 ->
+                    -- RET
+                    RET
+
+                -- 0xD9
+                B.HexByte B.HD B.H9 ->
+                    -- RETI
+                    RETI
 
                 ---- INC ----
                 -- 0x03
