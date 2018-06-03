@@ -33,7 +33,8 @@ type SixteenBitRegisterName
 type RegisterArgument
     = RegArg8 EightBitRegisterName
     | RegArg16 SixteenBitRegisterName
-    | Address SixteenBitRegisterName
+    | Address8 EightBitRegisterName
+    | Address16 SixteenBitRegisterName
 
 
 type alias RegisterState =
@@ -126,11 +127,18 @@ type Flag
 
 type Instruction
     = NOP
+      -- Stop CPU and LCD until button interupt
     | STOP
+      -- Load eight bit immediate value into register
     | LDEightBitValue RegisterArgument Byte
+      -- Load sixteen bit immediate value into register
     | LDSixteenBitValue RegisterArgument Byte Byte
+      -- Load from one register to another
     | LDRegister RegisterArgument RegisterArgument
+      -- Load and decrement
     | LDD RegisterArgument RegisterArgument
+      -- Load and increment
+    | LDI RegisterArgument RegisterArgument
     | PUSH RegisterArgument
     | POP RegisterArgument
     | ADDHL RegisterArgument
