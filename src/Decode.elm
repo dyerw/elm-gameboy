@@ -2168,4 +2168,32 @@ decode opCode =
                     NOP
 
         TwoByteOpcode byte byte2 byte3 ->
-            NOP
+            case (B.binaryByteToHexByte byte) of
+                ---- LD ----
+                -- 0x01
+                B.HexByte B.H0 B.H1 ->
+                    -- LD BC, d16
+                    LDSixteenBitValue (RegArg16 CPU.BC) byte2 byte3
+
+                -- 0x11
+                B.HexByte B.H1 B.H1 ->
+                    -- LD DE, d16
+                    LDSixteenBitValue (RegArg16 CPU.DE) byte2 byte3
+
+                -- 0x21
+                B.HexByte B.H2 B.H1 ->
+                    -- LD HL, d16
+                    LDSixteenBitValue (RegArg16 CPU.HL) byte2 byte3
+
+                -- 0x31
+                B.HexByte B.H3 B.H1 ->
+                    -- LD SP, d16
+                    LDSixteenBitValue (RegArg16 CPU.SP) byte2 byte3
+
+                -- 0x08
+                B.HexByte B.H0 B.H8 ->
+                    -- LD (a16), SP
+                    LDHRegisterToImmediateAddress (ImmediateAddress16 byte2 byte3) (RegArg16 CPU.SP)
+
+                _ ->
+                    NOP
