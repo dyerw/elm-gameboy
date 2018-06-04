@@ -9,15 +9,13 @@ import Binary as B
 
 
 type OpCode
-    = NullaryOpCode B.Byte
-    | OneByteOpCode B.Byte B.Byte
-    | TwoByteOpcode B.Byte B.Byte B.Byte
+    = OpCode B.Byte (Maybe B.Byte) (Maybe B.Byte)
 
 
 decode : OpCode -> Instruction
 decode opCode =
     case opCode of
-        NullaryOpCode byte ->
+        OpCode byte byte2 byte3 ->
             case (B.binaryByteToHexByte byte) of
                 B.HexByte B.H0 B.H0 ->
                     NOP
@@ -788,11 +786,6 @@ decode opCode =
                 B.HexByte B.H0 B.HA ->
                     LDRegister (RegArg16 CPU.BC) (RegArg8 CPU.A)
 
-                _ ->
-                    NOP
-
-        OneByteOpCode byte byte2 ->
-            case (B.binaryByteToHexByte byte) of
                 ---- STOP ----
                 -- 0x10
                 B.HexByte B.H1 B.H0 ->
@@ -860,6 +853,89 @@ decode opCode =
                 B.HexByte B.HF B.H0 ->
                     --LDH A,(a8)
                     LDHImmediateAddressToRegister (RegArg8 CPU.A) (ImmediateAddress8 byte2)
+
+                ---- LD ----
+                -- 0x01
+                B.HexByte B.H0 B.H1 ->
+                    -- LD BC, d16
+                    LDSixteenBitValue (RegArg16 CPU.BC) byte2 byte3
+
+                -- 0x11
+                B.HexByte B.H1 B.H1 ->
+                    -- LD DE, d16
+                    LDSixteenBitValue (RegArg16 CPU.DE) byte2 byte3
+
+                -- 0x21
+                B.HexByte B.H2 B.H1 ->
+                    -- LD HL, d16
+                    LDSixteenBitValue (RegArg16 CPU.HL) byte2 byte3
+
+                -- 0x31
+                B.HexByte B.H3 B.H1 ->
+                    -- LD SP, d16
+                    LDSixteenBitValue (RegArg16 CPU.SP) byte2 byte3
+
+                -- 0x08
+                B.HexByte B.H0 B.H8 ->
+                    -- LD (a16), SP
+                    LDHRegisterToImmediateAddress (ImmediateAddress16 byte2 byte3) (RegArg16 CPU.SP)
+
+                -- 0xEA
+                B.HexByte B.HE B.HA ->
+                    -- LD (a16), A
+                    LDHRegisterToImmediateAddress (ImmediateAddress16 byte2 byte3) (RegArg8 CPU.A)
+
+                -- 0xFA
+                B.HexByte B.HF B.HA ->
+                    -- LD A, (a16)
+                    LDHImmediateAddressToRegister (RegArg8 CPU.A) (ImmediateAddress16 byte2 byte3)
+
+                ---- JP ----
+                -- 0xC2
+                B.HexByte B.HC B.H2 ->
+                    -- JP NZ, a16
+                    JPFlag CPU.NonZeroFlag byte2 byte3
+
+                -- 0xD3
+                B.HexByte B.HD B.H2 ->
+                    -- JP NC, a16
+                    JPFlag CPU.NonCarryFlag byte2 byte3
+
+                -- 0xC3
+                B.HexByte B.HC B.H3 ->
+                    -- JP a16
+                    JP byte2 byte3
+
+                -- 0xCA
+                B.HexByte B.HC B.HA ->
+                    -- JP Z, a16
+                    JPFlag CPU.ZeroFlag byte2 byte3
+
+                -- 0xDA
+                B.HexByte B.HD B.HA ->
+                    -- JP C, a16
+                    JPFlag CPU.CarryFlag byte2 byte3
+
+                ---- CALL ----
+                -- 0xC4
+                B.HexByte B.HC B.H4 ->
+                    -- CALL NZ, a16
+                    CALLFlag CPU.NonZeroFlag byte2 byte3
+
+                -- 0xD4
+                B.HexByte B.HD B.H4 ->
+                    -- CALL NC, a16
+                    CALLFlag CPU.NonCarryFlag byte2 byte3
+
+                -- 0xCC
+                B.HexByte B.HC B.HC ->
+                    -- CALL Z, a16
+                    CALLFlag CPU.ZeroFlag byte2 byte3
+
+                -- 0xDC
+                B.HexByte B.HD B.HC ->
+                    -- CALL C, a16
+                    CALLFlag CPU.CarryFlag byte2 byte3
 
                 ---- PREFIX CB ----
                 B.HexByte B.HC B.HB ->
@@ -2318,94 +2394,3 @@ decode opCode =
                             -- RES 7 A
                             RES B.SevenIndex
                                 (RegArg8 CPU.A)
-
-                _ ->
-                    NOP
-
-        TwoByteOpcode byte byte2 byte3 ->
-            case (B.binaryByteToHexByte byte) of
-                ---- LD ----
-                -- 0x01
-                B.HexByte B.H0 B.H1 ->
-                    -- LD BC, d16
-                    LDSixteenBitValue (RegArg16 CPU.BC) byte2 byte3
-
-                -- 0x11
-                B.HexByte B.H1 B.H1 ->
-                    -- LD DE, d16
-                    LDSixteenBitValue (RegArg16 CPU.DE) byte2 byte3
-
-                -- 0x21
-                B.HexByte B.H2 B.H1 ->
-                    -- LD HL, d16
-                    LDSixteenBitValue (RegArg16 CPU.HL) byte2 byte3
-
-                -- 0x31
-                B.HexByte B.H3 B.H1 ->
-                    -- LD SP, d16
-                    LDSixteenBitValue (RegArg16 CPU.SP) byte2 byte3
-
-                -- 0x08
-                B.HexByte B.H0 B.H8 ->
-                    -- LD (a16), SP
-                    LDHRegisterToImmediateAddress (ImmediateAddress16 byte2 byte3) (RegArg16 CPU.SP)
-
-                -- 0xEA
-                B.HexByte B.HE B.HA ->
-                    -- LD (a16), A
-                    LDHRegisterToImmediateAddress (ImmediateAddress16 byte2 byte3) (RegArg8 CPU.A)
-
-                -- 0xFA
-                B.HexByte B.HF B.HA ->
-                    -- LD A, (a16)
-                    LDHImmediateAddressToRegister (RegArg8 CPU.A) (ImmediateAddress16 byte2 byte3)
-
-                ---- JP ----
-                -- 0xC2
-                B.HexByte B.HC B.H2 ->
-                    -- JP NZ, a16
-                    JPFlag CPU.NonZeroFlag byte2 byte3
-
-                -- 0xD3
-                B.HexByte B.HD B.H2 ->
-                    -- JP NC, a16
-                    JPFlag CPU.NonCarryFlag byte2 byte3
-
-                -- 0xC3
-                B.HexByte B.HC B.H3 ->
-                    -- JP a16
-                    JP byte2 byte3
-
-                -- 0xCA
-                B.HexByte B.HC B.HA ->
-                    -- JP Z, a16
-                    JPFlag CPU.ZeroFlag byte2 byte3
-
-                -- 0xDA
-                B.HexByte B.HD B.HA ->
-                    -- JP C, a16
-                    JPFlag CPU.CarryFlag byte2 byte3
-
-                ---- CALL ----
-                -- 0xC4
-                B.HexByte B.HC B.H4 ->
-                    -- CALL NZ, a16
-                    CALLFlag CPU.NonZeroFlag byte2 byte3
-
-                -- 0xD4
-                B.HexByte B.HD B.H4 ->
-                    -- CALL NC, a16
-                    CALLFlag CPU.NonCarryFlag byte2 byte3
-
-                -- 0xCC
-                B.HexByte B.HC B.HC ->
-                    -- CALL Z, a16
-                    CALLFlag CPU.ZeroFlag byte2 byte3
-
-                -- 0xDC
-                B.HexByte B.HD B.HC ->
-                    -- CALL C, a16
-                    CALLFlag CPU.CarryFlag byte2 byte3
-
-                _ ->
-                    NOP

@@ -28,6 +28,7 @@ type SixteenBitRegisterName
     | BC -- BC thru HL are "virtual" 16-bit registers using two 8-bit registers
     | DE
     | HL
+    | AF
 
 
 type RegisterArgument
@@ -106,6 +107,9 @@ setSixteenbitRegister sixteenBitRegisterName ( byte1, byte2 ) registerState =
 
         HL ->
             { registerState | h = byte1, l = byte2 }
+
+        AF ->
+            { registerState | a = byte1, f = byte2 }
 
 
 initialRegisterState : RegisterState
