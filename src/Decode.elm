@@ -692,8 +692,8 @@ decode opCode =
                     -- RET NZ
                     RETFlag CPU.NonZeroFlag
 
-                -- 0xD1
-                B.HexByte B.HD B.H1 ->
+                -- 0xD0
+                B.HexByte B.HD B.H0 ->
                     -- RET NC
                     RETFlag CPU.NonCarryFlag
 
