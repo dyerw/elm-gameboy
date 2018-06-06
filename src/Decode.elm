@@ -1,7 +1,7 @@
 module Decode exposing (..)
 
 import CPU exposing (Instruction(..), RegisterArgument(..), ImmediateAddress(..))
-import Binary as B
+import Binary as B exposing (Bit(..))
 
 
 -- An op code can include just the op code or
@@ -365,6 +365,26 @@ decode opCode =
                 B.HexByte B.H7 B.HF ->
                     -- LD A, A
                     Ok <| LDRegister (RegArg8 CPU.A) (RegArg8 CPU.A)
+
+                -- 0x0A
+                B.HexByte B.H0 B.HA ->
+                    -- LD A, (BC)
+                    Ok <| LDRegister (RegArg8 CPU.A) (Address16 CPU.BC)
+
+                -- 0x1A
+                B.HexByte B.H1 B.HA ->
+                    -- LD A, (DE)
+                    Ok <| LDRegister (RegArg8 CPU.A) (Address16 CPU.DE)
+
+                -- 0x2A
+                B.HexByte B.H2 B.HA ->
+                    -- LD A, (HL+)
+                    Ok <| LDI (RegArg8 CPU.A) (Address16 CPU.HL)
+
+                -- 0x3A
+                B.HexByte B.H3 B.HA ->
+                    -- LD A, (HL-)
+                    Ok <| LDD (RegArg8 CPU.A) (Address16 CPU.HL)
 
                 ---- ADD ----
                 -- 0x80
@@ -768,37 +788,212 @@ decode opCode =
                 ---- INC ----
                 -- 0x03
                 B.HexByte B.H0 B.H3 ->
+                    -- INC BC
                     Ok <| INC (RegArg16 CPU.BC)
 
+                -- 0x13
+                B.HexByte B.H1 B.H3 ->
+                    -- INC DE
+                    Ok <| INC (RegArg16 CPU.DE)
+
+                -- 0x23
+                B.HexByte B.H2 B.H3 ->
+                    -- INC HL
+                    Ok <| INC (RegArg16 CPU.HL)
+
+                -- 0x33
+                B.HexByte B.H3 B.H3 ->
+                    -- INC SP
+                    Ok <| INC (RegArg16 CPU.SP)
+
+                -- 0x04
                 B.HexByte B.H0 B.H4 ->
+                    -- INC B
                     Ok <| INC (RegArg8 CPU.B)
 
+                -- 0x14
+                B.HexByte B.H1 B.H4 ->
+                    -- INC D
+                    Ok <| INC (RegArg8 CPU.D)
+
+                -- 0x24
+                B.HexByte B.H2 B.H4 ->
+                    -- INC H
+                    Ok <| INC (RegArg8 CPU.H)
+
+                -- 0x34
+                B.HexByte B.H3 B.H4 ->
+                    -- INC (HL)
+                    Ok <| INC (Address16 CPU.HL)
+
+                -- 0x0C
+                B.HexByte B.H0 B.HC ->
+                    -- INC C
+                    Ok <| INC (RegArg8 CPU.C)
+
+                -- 0x1C
+                B.HexByte B.H1 B.HC ->
+                    -- INC E
+                    Ok <| INC (RegArg8 CPU.E)
+
+                -- 0x2C
+                B.HexByte B.H2 B.HC ->
+                    -- INC L
+                    Ok <| INC (RegArg8 CPU.L)
+
+                -- 0x3C
+                B.HexByte B.H3 B.HC ->
+                    -- INC A
+                    Ok <| INC (RegArg8 CPU.A)
+
+                ---- DEC ---
+                -- 0x05
                 B.HexByte B.H0 B.H5 ->
+                    -- DEC B
                     Ok <| DEC (RegArg8 CPU.B)
 
+                -- 0x15
+                B.HexByte B.H1 B.H5 ->
+                    -- DEC D
+                    Ok <| DEC (RegArg8 CPU.D)
+
+                -- 0x25
+                B.HexByte B.H2 B.H5 ->
+                    -- DEC H
+                    Ok <| DEC (RegArg8 CPU.H)
+
+                -- 0x35
+                B.HexByte B.H3 B.H5 ->
+                    -- DEC (HL)
+                    Ok <| DEC (Address16 CPU.HL)
+
+                -- 0x0B
+                B.HexByte B.H0 B.HB ->
+                    -- DEC BC
+                    Ok <| DEC (RegArg16 CPU.BC)
+
+                -- 0x1B
+                B.HexByte B.H1 B.HB ->
+                    -- DEC DE
+                    Ok <| DEC (RegArg16 CPU.DE)
+
+                -- 0x2B
+                B.HexByte B.H2 B.HB ->
+                    -- DEC HL
+                    Ok <| DEC (RegArg16 CPU.HL)
+
+                -- 0x3B
+                B.HexByte B.H3 B.HB ->
+                    -- DEC SP
+                    Ok <| DEC (RegArg16 CPU.SP)
+
+                -- 0x0D
+                B.HexByte B.H0 B.HD ->
+                    -- DEC C
+                    Ok <| DEC (RegArg8 CPU.C)
+
+                -- 0x1D
+                B.HexByte B.H1 B.HD ->
+                    -- DEC E
+                    Ok <| DEC (RegArg8 CPU.D)
+
+                -- 0x2D
+                B.HexByte B.H2 B.HD ->
+                    -- DEC L
+                    Ok <| DEC (RegArg8 CPU.L)
+
+                -- 0x3D
+                B.HexByte B.H3 B.HD ->
+                    -- DEC A
+                    Ok <| DEC (RegArg8 CPU.A)
+
+                ---- RR / RL ---
+                -- 0x07
                 B.HexByte B.H0 B.H7 ->
+                    -- RLCA
                     Ok RLCA
 
+                -- 0x17
+                B.HexByte B.H1 B.H7 ->
+                    -- RLA
+                    Ok RLA
+
+                -- 0x0F
+                B.HexByte B.H0 B.HF ->
+                    -- RRCA
+                    Ok RRCA
+
+                --- 0x1F
+                B.HexByte B.H1 B.HF ->
+                    -- RRA
+                    Ok RRA
+
+                -- 0x09
                 B.HexByte B.H0 B.H9 ->
+                    -- ADD HL, BC
                     Ok <| ADDHL (RegArg16 CPU.BC)
 
+                -- 0x19
                 B.HexByte B.H1 B.H9 ->
+                    -- ADD HL, DE
                     Ok <| ADDHL (RegArg16 CPU.DE)
 
+                -- 0x29
                 B.HexByte B.H2 B.H9 ->
+                    -- ADD HL, HL
                     Ok <| ADDHL (RegArg16 CPU.HL)
 
+                -- 0x39
                 B.HexByte B.H3 B.H9 ->
+                    -- ADD HL, SP
                     Ok <| ADDHL (RegArg16 CPU.SP)
 
-                B.HexByte B.H0 B.HA ->
-                    Ok <| LDRegister (RegArg16 CPU.BC) (RegArg8 CPU.A)
-
-                ---- STOP ----
+                ---- MISC ----
                 -- 0x10
                 B.HexByte B.H1 B.H0 ->
                     -- STOP 0
                     Ok STOP
+
+                -- 0x27
+                B.HexByte B.H2 B.H7 ->
+                    -- DAA
+                    Ok DAA
+
+                -- 0x37
+                B.HexByte B.H3 B.H7 ->
+                    -- SCF
+                    Ok SCF
+
+                -- 0x2F
+                B.HexByte B.H2 B.HF ->
+                    -- CPL
+                    Ok CPL
+
+                -- 0x3F
+                B.HexByte B.H3 B.HF ->
+                    -- CCF
+                    Ok CCF
+
+                ---- RST ----
+                --0xC7
+                B.HexByte B.HC B.H7 ->
+                    -- RST 00H
+                    Ok <| RST B.zeroByte
+
+                --0xD7
+                B.HexByte B.HD B.H7 ->
+                    -- RST 10H
+                    Ok <| RST (B.Byte O O O I O O O O)
+
+                --0xE7
+                B.HexByte B.HE B.H7 ->
+                    -- RST 20H
+                    Ok <| RST (B.Byte O O I O O O O O)
+
+                --0xF7
+                B.HexByte B.HF B.H7 ->
+                    -- RST 30H
+                    Ok <| RST (B.Byte O O I I O O O O)
 
                 ---- LD ----
                 -- 0x06
@@ -2665,6 +2860,57 @@ decode opCode =
                         _ ->
                             Err <| DecodeError { opCode = byte, message = "JP C, a16 requires two extra bytes" }
 
+                ---- JR ----
+                -- 0x18
+                B.HexByte B.H1 B.H8 ->
+                    case byte2 of
+                        Just b ->
+                            -- JR r8
+                            Ok <| JR b
+
+                        Nothing ->
+                            Err <| DecodeError { opCode = byte, message = "JR r8 requires a second byte" }
+
+                -- 0x28
+                B.HexByte B.H2 B.H8 ->
+                    case byte2 of
+                        Just b ->
+                            -- JR Z, r8
+                            Ok <| JRFlag CPU.ZeroFlag b
+
+                        Nothing ->
+                            Err <| DecodeError { opCode = byte, message = "JR Z, r8 requires a second byte" }
+
+                -- 0x38
+                B.HexByte B.H3 B.H8 ->
+                    case byte2 of
+                        Just b ->
+                            -- JR C, r8
+                            Ok <| JRFlag CPU.CarryFlag b
+
+                        Nothing ->
+                            Err <| DecodeError { opCode = byte, message = "JR C, r8 requires a second byte" }
+
+                -- 0x20
+                B.HexByte B.H2 B.H0 ->
+                    case byte2 of
+                        Just b ->
+                            -- JR NZ, r8
+                            Ok <| JRFlag CPU.NonZeroFlag b
+
+                        Nothing ->
+                            Err <| DecodeError { opCode = byte, message = "JR NZ, r8 requires a second byte" }
+
+                -- 0x30
+                B.HexByte B.H3 B.H0 ->
+                    case byte2 of
+                        Just b ->
+                            -- JR NC, r8
+                            Ok <| JRFlag CPU.NonCarryFlag b
+
+                        Nothing ->
+                            Err <| DecodeError { opCode = byte, message = "JR NC, r8 requires a second byte" }
+
                 ---- CALL ----
                 -- 0xC4
                 B.HexByte B.HC B.H4 ->
@@ -2705,6 +2951,3 @@ decode opCode =
 
                         _ ->
                             Err <| DecodeError { opCode = byte, message = "CALL C, a16 requires two extra bytes" }
-
-                _ ->
-                    Ok NOP
