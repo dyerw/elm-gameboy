@@ -152,11 +152,15 @@ type Instruction
     | POP RegisterArgument
     | ADDHL RegisterArgument
     | ADD RegisterArgument
+    | ADDEightBitValue RegisterArgument Byte
     | ADC RegisterArgument
     | SUB RegisterArgument
+    | SUBEightBitValue Byte
     | SBC RegisterArgument
     | AND RegisterArgument
+    | ANDEightBitValue Byte
     | OR RegisterArgument
+    | OREightBitValue Byte
     | XOR RegisterArgument
     | CP RegisterArgument
     | INC RegisterArgument
