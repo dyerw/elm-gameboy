@@ -1056,25 +1056,45 @@ decode opCode =
                     Ok CCF
 
                 ---- RST ----
-                --0xC7
+                -- 0xC7
                 B.HexByte B.HC B.H7 ->
                     -- RST 00H
                     Ok <| RST B.zeroByte
 
-                --0xD7
+                -- 0xD7
                 B.HexByte B.HD B.H7 ->
                     -- RST 10H
                     Ok <| RST (B.Byte O O O I O O O O)
 
-                --0xE7
+                -- 0xE7
                 B.HexByte B.HE B.H7 ->
                     -- RST 20H
                     Ok <| RST (B.Byte O O I O O O O O)
 
-                --0xF7
+                -- 0xF7
                 B.HexByte B.HF B.H7 ->
                     -- RST 30H
                     Ok <| RST (B.Byte O O I I O O O O)
+
+                -- 0xCF
+                B.HexByte B.HC B.HF ->
+                    -- RST 08H
+                    Ok <| RST (B.Byte O O O O I O O O)
+
+                -- 0xDF
+                B.HexByte B.HD B.HF ->
+                    -- RST 28H
+                    Ok <| RST (B.Byte O O O I I O O O)
+
+                --0xEF
+                B.HexByte B.HE B.HF ->
+                    -- RST 28H
+                    Ok <| RST (B.Byte O O I O I O O O)
+
+                --0xFF
+                B.HexByte B.HF B.HF ->
+                    -- RST 38H
+                    Ok <| RST (B.Byte O O I I I O O O)
 
                 ---- LD ----
                 -- 0x06
