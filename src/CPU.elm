@@ -148,6 +148,7 @@ type Instruction
     | LDHImmediateAddressToRegister RegisterArgument ImmediateAddress
     | LDD RegisterArgument RegisterArgument
     | LDI RegisterArgument RegisterArgument
+    | LDHL RegisterArgument Byte
     | PUSH RegisterArgument
     | POP RegisterArgument
     | ADDHL RegisterArgument
