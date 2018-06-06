@@ -26,6 +26,24 @@ decode opCode =
                     -- NOP
                     Ok NOP
 
+                ---- Non-Implemeneted NOPS ----
+                -- These are technically undefined by the CPU
+                -- but the Gameboy hardware treats them as NOPs
+                -- 0xD3
+                B.HexByte B.HD B.H3 ->
+                    -- NOP
+                    Ok NOP
+
+                -- 0xE3
+                B.HexByte B.HE B.H3 ->
+                    -- NOP
+                    Ok NOP
+
+                -- 0xE4
+                B.HexByte B.HE B.H4 ->
+                    -- NOP
+                    Ok NOP
+
                 -- 0xF4
                 B.HexByte B.HF B.H4 ->
                     -- NOP
@@ -35,6 +53,41 @@ decode opCode =
                 B.HexByte B.HF B.H3 ->
                     -- DI
                     Ok DI
+
+                -- 0xDB
+                B.HexByte B.HD B.HB ->
+                    -- NOP
+                    Ok NOP
+
+                -- 0xDD
+                B.HexByte B.HD B.HD ->
+                    -- NOP
+                    Ok NOP
+
+                -- 0xEB
+                B.HexByte B.HE B.HB ->
+                    -- NOP
+                    Ok NOP
+
+                -- 0xEC
+                B.HexByte B.HE B.HC ->
+                    -- NOP
+                    Ok NOP
+
+                -- 0xED
+                B.HexByte B.HE B.HD ->
+                    -- NOP
+                    Ok NOP
+
+                -- 0xFC
+                B.HexByte B.HF B.HC ->
+                    -- NOP
+                    Ok NOP
+
+                -- 0xFD
+                B.HexByte B.HF B.HD ->
+                    -- NOP
+                    Ok NOP
 
                 -- 0x02
                 B.HexByte B.H0 B.H2 ->
@@ -476,6 +529,16 @@ decode opCode =
                 B.HexByte B.H8 B.HF ->
                     -- ADC A, A
                     Ok <| ADC (RegArg8 CPU.C)
+
+                -- 0xE8
+                B.HexByte B.HE B.H8 ->
+                    case byte2 of
+                        Just b ->
+                            -- ADD SP, r8
+                            Ok <| ADDSP b
+
+                        Nothing ->
+                            Err <| DecodeError { opCode = byte, message = "ADD SP, r8 requires two bytes" }
 
                 ---- ALU Immediate Values ----
                 -- 0xC6
@@ -1196,6 +1259,19 @@ decode opCode =
                 B.HexByte B.HF B.H2 ->
                     --LD A,(c)
                     Ok <| LDRegister (RegArg8 CPU.A) (Address8 CPU.C)
+
+                B.HexByte B.HF B.H9 ->
+                    -- LD SP, HL
+                    Ok <| LDRegister (RegArg16 CPU.SP) (RegArg16 CPU.HL)
+
+                B.HexByte B.HF B.H8 ->
+                    case byte2 of
+                        Just b ->
+                            -- LD HL, SP+r8
+                            Ok <| LDHL (RegArg16 CPU.SP) b
+
+                        Nothing ->
+                            Err <| DecodeError { opCode = byte, message = "LD HL, SP+r8 requires a second byte" }
 
                 ---- LDH ----
                 -- 0xE0
@@ -2971,6 +3047,11 @@ decode opCode =
                         _ ->
                             Err <| DecodeError { opCode = byte, message = "JP C, a16 requires two extra bytes" }
 
+                -- 0xE9
+                B.HexByte B.HE B.H9 ->
+                    -- JP (HL)
+                    Ok <| JPHL
+
                 ---- JR ----
                 -- 0x18
                 B.HexByte B.H1 B.H8 ->
@@ -3062,3 +3143,13 @@ decode opCode =
 
                         _ ->
                             Err <| DecodeError { opCode = byte, message = "CALL C, a16 requires two extra bytes" }
+
+                -- 0xCD
+                B.HexByte B.HC B.HD ->
+                    case ( byte2, byte3 ) of
+                        ( Just b, Just b2 ) ->
+                            -- CALL a16
+                            Ok <| CALL b b2
+
+                        _ ->
+                            Err <| DecodeError { opCode = byte, message = "CALL a16 requires two extra bytes" }
