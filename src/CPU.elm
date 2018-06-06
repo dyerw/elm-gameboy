@@ -154,15 +154,19 @@ type Instruction
     | ADD RegisterArgument
     | ADDEightBitValue RegisterArgument Byte
     | ADC RegisterArgument
+    | ADCEightBitValue RegisterArgument Byte
     | SUB RegisterArgument
     | SUBEightBitValue Byte
     | SBC RegisterArgument
+    | SBCEightBitValue RegisterArgument Byte
     | AND RegisterArgument
     | ANDEightBitValue Byte
     | OR RegisterArgument
     | OREightBitValue Byte
     | XOR RegisterArgument
+    | XOREightBitValue Byte
     | CP RegisterArgument
+    | CPEightBitValue Byte
     | INC RegisterArgument
     | DEC RegisterArgument
     | ADDSP Byte

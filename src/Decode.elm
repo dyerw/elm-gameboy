@@ -508,6 +508,46 @@ decode opCode =
                         Nothing ->
                             Err <| DecodeError { opCode = byte, message = "OR d8 requires a second byte" }
 
+                -- 0xCE
+                B.HexByte B.HC B.HE ->
+                    case byte2 of
+                        Just b ->
+                            -- ADC A, d8
+                            Ok <| ADCEightBitValue (RegArg8 CPU.A) b
+
+                        Nothing ->
+                            Err <| DecodeError { opCode = byte, message = "ADC A, d8 requires a second byte" }
+
+                -- 0xDE
+                B.HexByte B.HD B.HE ->
+                    case byte2 of
+                        Just b ->
+                            -- SBC A, d8
+                            Ok <| SBCEightBitValue (RegArg8 CPU.A) b
+
+                        Nothing ->
+                            Err <| DecodeError { opCode = byte, message = "SBC A, d8 requires a second byte" }
+
+                -- 0xEE
+                B.HexByte B.HE B.HE ->
+                    case byte2 of
+                        Just b ->
+                            -- XOR d8
+                            Ok <| XOREightBitValue b
+
+                        Nothing ->
+                            Err <| DecodeError { opCode = byte, message = "XOR d8 requires a second byte" }
+
+                -- 0xFE
+                B.HexByte B.HF B.HE ->
+                    case byte2 of
+                        Just b ->
+                            -- CP d8
+                            Ok <| CPEightBitValue b
+
+                        Nothing ->
+                            Err <| DecodeError { opCode = byte, message = "CP d8 requires a second byte" }
+
                 ---- SUB ----
                 -- 0x90
                 B.HexByte B.H9 B.H0 ->
