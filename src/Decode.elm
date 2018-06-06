@@ -467,6 +467,47 @@ decode opCode =
                     -- ADC A, A
                     Ok <| ADC (RegArg8 CPU.C)
 
+                ---- ALU Immediate Values ----
+                -- 0xC6
+                B.HexByte B.HC B.H6 ->
+                    case byte2 of
+                        Just b ->
+                            -- ADD A, d8
+                            Ok <| ADDEightBitValue (RegArg8 CPU.A) b
+
+                        Nothing ->
+                            Err <| DecodeError { opCode = byte, message = "ADD A, d8 requires a second byte" }
+
+                -- 0xD6
+                B.HexByte B.HD B.H6 ->
+                    case byte2 of
+                        Just b ->
+                            -- SUB d8
+                            Ok <| SUBEightBitValue b
+
+                        Nothing ->
+                            Err <| DecodeError { opCode = byte, message = "SUB d8 requires a second byte" }
+
+                -- 0xE6
+                B.HexByte B.HE B.H6 ->
+                    case byte2 of
+                        Just b ->
+                            -- AND d8
+                            Ok <| ANDEightBitValue b
+
+                        Nothing ->
+                            Err <| DecodeError { opCode = byte, message = "AND d8 requires a second byte" }
+
+                -- 0xF6
+                B.HexByte B.HF B.H6 ->
+                    case byte2 of
+                        Just b ->
+                            -- OR d8
+                            Ok <| OREightBitValue b
+
+                        Nothing ->
+                            Err <| DecodeError { opCode = byte, message = "OR d8 requires a second byte" }
+
                 ---- SUB ----
                 -- 0x90
                 B.HexByte B.H9 B.H0 ->
