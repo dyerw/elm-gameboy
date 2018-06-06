@@ -26,6 +26,17 @@ decode opCode =
                     -- NOP
                     Ok NOP
 
+                ---- Interrupts ----
+                -- 0xF3
+                B.HexByte B.HF B.H3 ->
+                    -- DI
+                    Ok DI
+
+                -- 0xFB
+                B.HexByte B.HF B.HB ->
+                    -- EI
+                    Ok EI
+
                 ---- Non-Implemeneted NOPS ----
                 -- These are technically undefined by the CPU
                 -- but the Gameboy hardware treats them as NOPs
@@ -48,11 +59,6 @@ decode opCode =
                 B.HexByte B.HF B.H4 ->
                     -- NOP
                     Ok NOP
-
-                -- 0xF3
-                B.HexByte B.HF B.H3 ->
-                    -- DI
-                    Ok DI
 
                 -- 0xDB
                 B.HexByte B.HD B.HB ->
