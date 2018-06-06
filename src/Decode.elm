@@ -26,6 +26,16 @@ decode opCode =
                     -- NOP
                     Ok NOP
 
+                -- 0xF4
+                B.HexByte B.HF B.H4 ->
+                    -- NOP
+                    Ok NOP
+
+                -- 0xF3
+                B.HexByte B.HF B.H3 ->
+                    -- DI
+                    Ok DI
+
                 -- 0x02
                 B.HexByte B.H0 B.H2 ->
                     -- LD (BC), A
