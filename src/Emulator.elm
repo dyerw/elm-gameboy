@@ -1,6 +1,6 @@
 module Emulator exposing (..)
 
-import CPU exposing (..)
+import CPU as C
 import Binary as B exposing (Bit(..))
 import Decode as D
 import MMU exposing (..)
@@ -10,7 +10,7 @@ import MMU exposing (..)
 
 
 type alias EmulatorState =
-    { mmu : MMU, registers : RegisterState }
+    { mmu : MMU, registers : C.RegisterState }
 
 
 fetch : EmulatorState -> ( D.OpCode, EmulatorState )
@@ -18,18 +18,9 @@ fetch emulatorState =
     ( (D.OpCode (B.Byte O O O O O O O O) Nothing Nothing), emulatorState )
 
 
-type ExecuteError
-    = ExecuteError String
-
-
 type EmulatorError
-    = EmulatorExecuteError ExecuteError
+    = EmulatorCPUError C.CPUError
     | EmulatorDecodeError D.DecodeError
-
-
-execute : ( Instruction, EmulatorState ) -> Result EmulatorError EmulatorState
-execute ( instruction, emulatorState ) =
-    Ok emulatorState
 
 
 processInstructionCycle : EmulatorState -> Result EmulatorError EmulatorState
@@ -41,4 +32,10 @@ processInstructionCycle emulatorState =
                 Result.map (\x -> ( x, state )) instructionResult
            )
         |> Result.mapError (\decodeError -> EmulatorDecodeError decodeError)
-        |> Result.andThen execute
+        |> Result.andThen
+            (\( instruction, state ) ->
+                (C.execute instruction state.mmu state.registers)
+                    |> Result.mapError
+                        (\cpuError -> EmulatorCPUError cpuError)
+                    |> Result.map (\( mmu, registers ) -> { mmu = mmu, registers = registers })
+            )

@@ -204,3 +204,12 @@ type Instruction
     | RET
     | RETFlag Flag
     | RETI
+
+
+type CPUError
+    = CPUError { instruction : Instruction, message : String }
+
+
+execute : Instruction -> MMU -> RegisterState -> Result CPUError ( MMU, RegisterState )
+execute instruction mmu registerState =
+    Ok ( mmu, registerState )
